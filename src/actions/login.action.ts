@@ -7,7 +7,6 @@ import {
   server,
 } from "../constants";
 import { httpClient } from "../utils/HttpClient";
-import jwt from "jsonwebtoken";
 
 // Send action type and payload to Reducer
 export const setLoginFetchingToState = () => ({
@@ -59,23 +58,12 @@ export const handleLogout = (history: any) => {
   };
 };
 
-export const handleReLogin = () => {
+export const handleReLogin = () => {  
   return (dispatch: any) => {
     const token = localStorage.getItem(server.TOKEN_KEY);
-    debugger;
-    if (token && !isTokenExpired(token)) {
+    
+    if (token) {
       dispatch(setLoginSuccessToState({ token }));
     }
   };
-};
-
-export const isTokenExpired = (token: string): boolean => {
-  var decodedToken = jwt.decode(token, { complete: true });
-  var dateNow = new Date();
-
-  if (decodedToken?.payload.exp! < dateNow.getTime()) {
-    return false;
-  } else {
-    return true;
-  }
 };

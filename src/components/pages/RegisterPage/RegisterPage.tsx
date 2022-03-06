@@ -12,7 +12,7 @@ import { User } from "../../../models/user.model";
 import * as registerActions from "./../../../actions/register.action";
 import { SxProps } from "@mui/system";
 
-const classes: SxProps = {
+const classes: any = {
   root: { display: "flex", justifyContent: "center", alignItems: "center" },
   submitBtn: { marginTop: 4 },
   canelBtn: { marginTop: 2 },

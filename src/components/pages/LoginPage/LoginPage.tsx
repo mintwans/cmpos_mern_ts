@@ -22,7 +22,7 @@ export default (props: any) => {
   const history = useHistory();
 
   const loginReducer = useSelector((state: RootReducers) => state.loginReducer);
-  const classes: SxProps = {
+  const classes: any = {
     root: { display: "flex", justifyContent: "center", alignItems: "center" },
     submitBtn: { marginTop: 4 },
     canelBtn: { marginTop: 2 },

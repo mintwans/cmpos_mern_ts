@@ -16,7 +16,7 @@ router.post("/login", async (req, res) => {
         username: doc.username,
       };
 
-      let token = jwt.sign(payload, "10000"); // unit is millisec
+      let token = jwt.sign(payload, "10000000"); // unit is millisec
       const refreshToken = randtoken.uid(256);
       refreshTokens[refreshToken] = req.body.username;
 

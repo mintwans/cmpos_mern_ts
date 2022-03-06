@@ -1,26 +1,30 @@
+# vscode extension 
+code --install-extension dsznajder.es7-react-js-snippets
+code --install-extension vscode-icons-team.vscode-icons
+code --install-extension naumovs.color-highlight
+code --install-extension esbenp.prettier-vscode
+code --install-extension humao.rest-client
+code --install-extension riazxrazor.html-to-jsx
+code --install-extension christian-kohler.path-intellisense
+
 # Install 
 1. nodejs lts
 2. install yarn with [sudo] npm i -g yarn
-2. vscode
-3. vscode extentions
-4. mongodb
-5. mongoshell
+3. yarn add global create-react-app
+4. vscode
+5. vscode extentions
+6. mongodb
+7. mongoshell
 
 # new project 
 npx create-react-app cmpos_mern_ts --template typescript
 
+# react snippet 
+tsrc : gerate typescript fc
+
+
 # install
-yarn add axios chart.js react-chartjs-2 react-moment react-number-format redux react-redux formik redux-logger redux-thunk url-join clsx @material-ui/lab  jsonwebtoken material-table formik-material-ui @types/redux-logger react-router-dom@5.2.0
-
-yarn add @types/redux-logger
-yarn add react-router-dom@5.2.0
-
-yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material
-yarn add @types/jsonwebtoken
-yarn add @mui/x-data-grid
-yarn add @material-ui/core
-yarn add moment
-
+yarn add @emotion/react @emotion/styled @mui/icons-material @mui/material @mui/x-data-grid chart.js react-chartjs-2 @react-hook/debounce react-router-dom@5.3.2 @types/react-router-dom axios formik formik-material-ui moment react-moment url-join react-number-format @types/redux-logger react-redux redux redux-logger redux-thunk
 
 # create folders
 src/components
@@ -31,7 +35,7 @@ src/components
 
 # Page Components
 // In Pages
-yarn add create-react-component-folder
+yarn add global create-react-component-folder
 
 // src/components/pages
 npx crcf -f  --notest --typescript LoginPage RegisterPage ReportPage StockPage StockCreatePage StockEditPage TransactionPage ShopPage

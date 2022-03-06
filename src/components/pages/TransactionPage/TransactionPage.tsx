@@ -38,7 +38,7 @@ export default (props: any) => {
       field: "timestamp",
       width: 150,
       renderCell: (params: GridRenderCellParams<string>) => (
-        <Moment format="YYYY/MM/DD HH:MM">{params.value}</Moment>
+        <Moment format="YYYY/MM/DD hh:mm">{params.value}</Moment>
       ),
     },
     {
