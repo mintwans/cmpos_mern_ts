@@ -3,15 +3,16 @@ import {
   TRANSACTION_FETCHING,
   TRANSACTION_SUCCESS,
 } from "../constants";
+import { TransactionResponse } from "../types/transaction.type";
 
 export interface TransactionState {
-  result: any;
+  result: TransactionResponse[];
   isFetching: boolean;
   isError: boolean;
 }
 
 const initialState: TransactionState = {
-  result: null,
+  result: [],
   isFetching: false,
   isError: false,
 };
@@ -21,9 +22,9 @@ export default (state = initialState, { type, payload }: any) => {
     case TRANSACTION_SUCCESS:
       return { ...state, result: payload, isFetching: false, isError: false };
     case TRANSACTION_FAILED:
-      return { ...state, result: null, isFetching: false, isError: true };
+      return { ...state, result: [], isFetching: false, isError: true };
     case TRANSACTION_FETCHING:
-      return { ...state, result: null, isFetching: true, isError: false };
+      return { ...state, result: [], isFetching: true, isError: false };
     default:
       return state;
   }

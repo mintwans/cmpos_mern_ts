@@ -4,14 +4,14 @@ import {
   LOGIN_SUCCESS,
   LOGOUT,
 } from "../constants";
+import { LoginResult } from "../types/auth-result.type";
 
 export interface LoginState {
-  result: any;
+  result?: LoginResult;
   isFetching: boolean;
   isError: boolean;
 }
 const initialState: LoginState = {
-  result: null,
   isFetching: false,
   isError: false,
 };
@@ -26,7 +26,7 @@ export default (state = initialState, { type, payload }: any) => {
     case LOGIN_FAILED:
       return { ...state, result: payload, isFetching: false, isError: true };
     case LOGOUT:
-      return { ...state, result: "", isFetching: false, isError: false };
+      return { ...state, result: null, isFetching: false, isError: false };
     default:
       return state;
   }

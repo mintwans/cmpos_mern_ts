@@ -1,10 +1,11 @@
-import { Container } from "@mui/material";
+import { Container, GlobalStyles } from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import { styled } from "@mui/material/styles";
+import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
 import * as React from "react";
 import {
   BrowserRouter as Router,
+  Link,
   Redirect,
   Route,
   RouteProps,
@@ -33,8 +34,17 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-export default function App() {
-  const [open, setOpen] = React.useState(false);
+const theme = createTheme({
+  palette: {
+    background: {
+      default: "#CFD2D6",
+    },
+  },
+});
+
+type AppProps = {};
+export default function App(props: AppProps) {
+  const [open, setOpen] = React.useState(true);
   const loginReducer = useSelector((state: RootReducers) => state.loginReducer);
   const dispatch = useDispatch();
 
@@ -86,10 +96,10 @@ export default function App() {
   );
 
   return (
-    <Router
-      basename={process.env.REACT_APP_IS_PRODUCTION === "1" ? "/demo" : ""}
-    >
-      <Switch>
+    <ThemeProvider theme={theme}>
+      <Router
+        basename={process.env.REACT_APP_IS_PRODUCTION === "1" ? "/demo" : ""}
+      >
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
           {/* Header */}
@@ -109,24 +119,47 @@ export default function App() {
           >
             <Container>
               <DrawerHeader />
-              {/* Pages Define */}
-              <LoginRoute path="/login" component={LoginPage} />
-              <Route path="/register" component={RegisterPage} />
-              <SecuredRoute path="/shop" component={ShopPage} />
-              <SecuredRoute exact={true} path="/stock" component={StockPage} />
-              <SecuredRoute path="/stock/create" component={StockCreatePage} />
-              <SecuredRoute path="/stock/edit/:id" component={StockEditPage} />
-              <SecuredRoute path="/report" component={ReportPage} />
-              <SecuredRoute path="/transaction" component={TransactionPage} />
-              <Route
-                exact={true}
-                path="/"
-                component={() => <Redirect to="/login" />}
-              />
+              <Switch>
+                {/* Pages Define */}
+                <LoginRoute path="/login" component={LoginPage} />
+                <Route path="/register" component={RegisterPage} />
+                <SecuredRoute path="/shop" component={ShopPage} />
+                <SecuredRoute
+                  exact={true}
+                  path="/stock"
+                  component={StockPage}
+                />
+                <SecuredRoute
+                  path="/stock/create"
+                  component={StockCreatePage}
+                />
+                <SecuredRoute
+                  path="/stock/edit/:id"
+                  component={StockEditPage}
+                />
+                <SecuredRoute path="/report" component={ReportPage} />
+                <SecuredRoute path="/transaction" component={TransactionPage} />
+                <Route
+                  exact={true}
+                  path="/"
+                  component={() => <Redirect to="/login" />}
+                />
+                <Route path="*">
+                  {/* is equal to component={NotFoundPage} */}
+                  <NotFound />
+                </Route>
+              </Switch>
             </Container>
           </Box>
         </Box>
-      </Switch>
-    </Router>
+      </Router>
+    </ThemeProvider>
   );
 }
+
+const NotFound = () => (
+  <div>
+    <h1>404 - Not Found!</h1>
+    <Link to="/">Go Home</Link>
+  </div>
+);

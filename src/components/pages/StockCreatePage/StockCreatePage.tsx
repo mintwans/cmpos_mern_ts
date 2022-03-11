@@ -3,16 +3,19 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, FormikProps } from "formik";
 import { TextField } from "formik-material-ui";
-import React from "react";
+
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { Product } from "../../../types/product.type";
 import * as stockActions from "./../../../actions/stock.action";
 
-export default (props: any) => {
+export default () => {
   const dispatch = useDispatch();
-  const showForm = ({ values, setFieldValue }: any) => {
+  const history = useHistory();
+
+  const showForm = ({ values, setFieldValue }: FormikProps<Product>) => {
     return (
       <Form>
         <Card>
@@ -61,7 +64,7 @@ export default (props: any) => {
 
               <input
                 type="file"
-                onChange={(e: any) => {
+                onChange={(e: React.ChangeEvent<any>) => {
                   e.preventDefault();
                   setFieldValue("file", e.target.files[0]); // for upload
                   setFieldValue(
@@ -103,6 +106,8 @@ export default (props: any) => {
     }
   };
 
+  const initialValues: Product = { name: "", stock: 10, price: 90 };
+
   return (
     <Box>
       <Formik
@@ -113,14 +118,14 @@ export default (props: any) => {
           if (!values.price) errors.price = "Enter price";
           return errors;
         }}
-        initialValues={{ name: "", stock: 10, price: 90 }}
-        onSubmit={(values: any, { setSubmitting }) => {
+        initialValues={initialValues}
+        onSubmit={(values, { setSubmitting }) => {
           let formData = new FormData();
           formData.append("name", values.name);
-          formData.append("price", values.price);
-          formData.append("stock", values.stock);
-          formData.append("image", values.file);
-          dispatch(stockActions.addProduct(formData, props.history));
+          formData.append("price", String(values.price));
+          formData.append("stock", String(values.stock));
+          formData.append("image", String(values.file));
+          dispatch(stockActions.addProduct(formData, history));
           setSubmitting(false);
         }}
       >

@@ -6,6 +6,7 @@ import LayersIcon from "@mui/icons-material/Layers";
 import MailIcon from "@mui/icons-material/Mail";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import ShopIcon from "@mui/icons-material/Shop";
+import { Stack } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
@@ -98,15 +99,27 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
   const theme = useTheme();
 
   return (
-    <Drawer variant="permanent" open={open}>
-      <DrawerHeader>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === "rtl" ? (
-            <ChevronRightIcon />
-          ) : (
-            <ChevronLeftIcon />
-          )}
-        </IconButton>
+    <Drawer
+      variant="permanent"
+      open={open}
+      sx={{
+        backgroundImage: `${process.env.PUBLIC_URL}/images/background_menu.jpg`,
+      }}
+    >
+      <DrawerHeader sx={{ backgroundColor: "#1976d2" }}>
+        <Stack direction="row" alignItems="center">
+          <img
+            src={`${process.env.PUBLIC_URL}/images/cm_logo.png`}
+            style={{ height: 30 }}
+          />
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "rtl" ? (
+              <ChevronRightIcon sx={{ color: "white" }} />
+            ) : (
+              <ChevronLeftIcon sx={{ color: "white" }} />
+            )}
+          </IconButton>
+        </Stack>
       </DrawerHeader>
 
       {open && (
@@ -116,9 +129,20 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
         />
       )}
       <Divider />
-      <List>
+      <List
+        sx={{
+          background: `${process.env.PUBLIC_URL}/images/background_menu.jpg`,
+        }}
+      >
         {/* Shop */}
-        <ListItem component={NavLink} to="/shop" button key="shop">
+        <ListItem
+          component={NavLink}
+          to="/shop"
+          button
+          key="shop"
+          activeClassName="Mui-selected"
+          exact
+        >
           <ListItemIcon>
             <ShopIcon />
           </ListItemIcon>
@@ -126,7 +150,14 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
         </ListItem>
 
         {/* Stock */}
-        <ListItem component={NavLink} to="/stock" button key="stock">
+        <ListItem
+          component={NavLink}
+          to="/stock"
+          button
+          key="stock"
+          activeClassName="Mui-selected"
+          exact
+        >
           <ListItemIcon>
             <LayersIcon />
           </ListItemIcon>
@@ -134,7 +165,14 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
         </ListItem>
 
         {/* Report */}
-        <ListItem component={NavLink} to="/report" button key="report">
+        <ListItem
+          component={NavLink}
+          to="/report"
+          button
+          key="report"
+          activeClassName="Mui-selected"
+          exact
+        >
           <ListItemIcon>
             <BarChartIcon />
           </ListItemIcon>
@@ -147,6 +185,8 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
           to="/transaction"
           button
           key="transaction"
+          activeClassName="Mui-selected"
+          exact
         >
           <ListItemIcon>
             <AttachMoneyIcon />

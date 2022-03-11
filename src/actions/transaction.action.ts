@@ -4,9 +4,10 @@ import {
   TRANSACTION_FETCHING,
   TRANSACTION_SUCCESS,
 } from "../constants";
+import { TransactionResponse } from "../types/transaction.type";
 import { httpClient } from "../utils/HttpClient";
 
-const setStateTransactionToSuccess = (payload: any) => ({
+const setStateTransactionToSuccess = (payload: TransactionResponse) => ({
   type: TRANSACTION_SUCCESS,
   payload: payload,
 });
@@ -23,7 +24,7 @@ export const getTransactions = () => {
   setStateTransactionToFetching();
   return (dispatch: any) => {
     httpClient
-      .get(server.TRANSACTION_URL)
+      .get<TransactionResponse>(server.TRANSACTION_URL)
       .then((result) => {
         dispatch(setStateTransactionToSuccess(result.data));
       })

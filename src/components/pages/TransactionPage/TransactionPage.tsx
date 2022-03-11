@@ -10,20 +10,30 @@ import {
   GridColDef,
   GridColumns,
   GridRenderCellParams,
+  GridRowId,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
 import { RootReducers } from "../../../reducers";
-import { Grid, Typography } from "@mui/material";
+import { Avatar, Grid, Paper, Stack, Typography } from "@mui/material";
 
 export default (props: any) => {
   const dispatch = useDispatch();
   const [orderList, setOrderList] = useState([]);
+  const [selectedId, setSelectedId] = useState<GridRowId>(0);
+
   const transactionReducer = useSelector(
     (state: RootReducers) => state.transactionReducer
   );
 
   useEffect(() => {
     dispatch(transactionActions.getTransactions());
+
+    setTimeout(() => {
+      if (transactionReducer.result.length > 0) {
+        setOrderList(JSON.parse(transactionReducer.result[0].order_list));
+        setSelectedId(Number(transactionReducer.result[0].transaction_id));
+      }
+    }, 300);
   }, []);
 
   const transactionColumns: GridColDef[] = [
@@ -144,22 +154,31 @@ export default (props: any) => {
   ];
 
   return (
-    <Grid container spacing={2} sx={{ height: "80vh" }}>
-      <Grid item xs={6}>
-        <DataGrid
-          onRowClick={(e) => setOrderList(JSON.parse(e.row.order_list))}
-          rows={transactionReducer.result}
-          columns={transactionColumns}
-          rowsPerPageOptions={[5]}
-        />
+    <Paper sx={{ padding: 4 }}>
+      <Grid container spacing={2} sx={{ height: "80vh" }}>
+        <Grid item xs={7}>
+          <DataGrid
+            onSelectionModelChange={(newSelectionModel) => {
+              setSelectedId(newSelectionModel[0]);
+            }}
+            selectionModel={[selectedId]}
+            onRowClick={(e) => setOrderList(JSON.parse(e.row.order_list))}
+            rows={transactionReducer.result}
+            columns={transactionColumns}
+            rowsPerPageOptions={[5]}
+          />
+        </Grid>
+        <Grid item xs={5}>
+          <ul>
+            {orderList.map((item: any) => (
+              <Stack direction="row" spacing={1}>
+                <Avatar src={`${imageUrl}/images/${item.image}`} />
+                <li>{item.name}</li>
+              </Stack>
+            ))}
+          </ul>
+        </Grid>
       </Grid>
-      <Grid item xs={6}>
-        <ul>
-          {orderList.map((item: any) => (
-            <li>{item.name}</li>
-          ))}
-        </ul>
-      </Grid>
-    </Grid>
+    </Paper>
   );
 };

@@ -8,9 +8,10 @@ import { Box } from "@mui/system";
 import { Formik } from "formik";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { User } from "../../../models/user.model";
+import { User } from "../../../types/user.type";
 import * as registerActions from "./../../../actions/register.action";
 import { SxProps } from "@mui/system";
+import { useHistory } from "react-router-dom";
 
 const classes: any = {
   root: { display: "flex", justifyContent: "center", alignItems: "center" },
@@ -18,8 +19,10 @@ const classes: any = {
   canelBtn: { marginTop: 2 },
 };
 
-export default (props: any) => {
+type RegisterProps = {};
+export default (props: RegisterProps) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const showForm = ({
     values,
@@ -67,7 +70,7 @@ export default (props: any) => {
         </Button>
         <Button
           sx={classes.canelBtn}
-          onClick={() => props.history.goBack()}
+          onClick={() => history.goBack()}
           type="button"
           fullWidth
           variant="outlined"
@@ -89,7 +92,7 @@ export default (props: any) => {
           <Formik
             initialValues={initialValue}
             onSubmit={(values, { setSubmitting }) => {
-              dispatch(registerActions.register(values, props.history));
+              dispatch(registerActions.register(values, history));
               setSubmitting(false);
             }}
           >

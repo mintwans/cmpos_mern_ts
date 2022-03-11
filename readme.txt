@@ -23,7 +23,7 @@ npx create-react-app cmpos_mern_ts --template typescript
 tsrc : gerate typescript fc
 
 # install
-yarn add @emotion/react @emotion/styled @mui/icons-material @mui/material @mui/x-data-grid chart.js react-chartjs-2 @react-hook/debounce react-router-dom@5.3.2 @types/react-router-dom axios formik formik-material-ui moment react-moment url-join react-number-format @types/redux-logger react-redux redux redux-logger redux-thunk
+yarn add @emotion/react @emotion/styled @mui/icons-material @mui/material @mui/x-data-grid chart.js react-chartjs-2 @react-hook/debounce react-router-dom@5.3.2 @types/react-router-dom axios formik formik-material-ui moment react-moment url-join react-number-format @types/redux-logger react-redux redux redux-logger redux-thunk faker
 
 # create folders
 src/components
@@ -64,7 +64,6 @@ node server.js
 npx nodemon server.js
 npm init
 
-npx yarn add express formidable body-parser fs-extra
-
-npx yarn add express body-parser fs-extra formidable cors bcryptjs rand-token jsonwebtoken mongoose mongoose-sequence onesignal-node
+# backend packages
+npx yarn add express fs-extra formidable cors bcryptjs rand-token jsonwebtoken mongoose mongoose-sequence onesignal-node
 http://travistidwell.com/jsencrypt/demo/

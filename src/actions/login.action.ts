@@ -6,6 +6,9 @@ import {
   LOGOUT,
   server,
 } from "../constants";
+import { LoginResult } from "../types/auth-result.type";
+import { HistoryProp } from "../types/history.type";
+import { User } from "../types/user.type";
 import { httpClient } from "../utils/HttpClient";
 
 // Send action type and payload to Reducer
@@ -13,7 +16,7 @@ export const setLoginFetchingToState = () => ({
   type: LOGIN_FETCHING,
 });
 
-export const setLoginSuccessToState = (payload: any) => ({
+export const setLoginSuccessToState = (payload: LoginResult) => ({
   type: LOGIN_SUCCESS,
   payload,
 });
@@ -26,12 +29,12 @@ export const setLoginLogoutToState = () => ({
   type: LOGOUT,
 });
 
-export const handleLogin = (value: any, history: any) => {
+export const handleLogin = (value: User, history: HistoryProp) => {
   return async (dispatch: any) => {
     try {
       dispatch(setLoginFetchingToState()); // fetching
 
-      let result = await httpClient.post(server.LOGIN_URL, value);
+      let result = await httpClient.post<LoginResult>(server.LOGIN_URL, value);
 
       if (result.data.result === "ok") {
         const { token, refreshToken } = result.data;
@@ -58,12 +61,19 @@ export const handleLogout = (history: any) => {
   };
 };
 
-export const handleReLogin = () => {  
+export const handleReLogin = () => {
   return (dispatch: any) => {
     const token = localStorage.getItem(server.TOKEN_KEY);
-    
+    const refreshToken = localStorage.getItem(server.REFRESH_TOKEN_KEY);
+
     if (token) {
-      dispatch(setLoginSuccessToState({ token }));
+      dispatch(
+        setLoginSuccessToState({
+          token,
+          result: "ok",
+          refreshToken: refreshToken!,
+        })
+      );
     }
   };
 };

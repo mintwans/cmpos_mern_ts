@@ -54,25 +54,6 @@ export default (props: any) => {
     dispatch(stockActions.getProducts());
   }, []);
 
-  const actions = [
-    {
-      icon: "edit",
-      iconProps: { color: "primary" },
-      tooltip: "Edit",
-      onClick: (event: any, rowData: any) =>
-        props.history.push("/stock/edit/" + rowData.product_id),
-    },
-    {
-      icon: "delete",
-      iconProps: { color: "action" },
-      tooltip: "Delete",
-      onClick: (event: any, rowData: any) => {
-        setSelectedProduct(rowData);
-        setOpenDialog(true);
-      },
-    },
-  ];
-
   const handleDeleteConfirm = () => {
     dispatch(stockActions.deleteProduct(selectedProduct.product_id));
     dispatch(stockActions.getProducts());
@@ -177,7 +158,7 @@ export default (props: any) => {
       >
         <input type="text" hidden />
         <InputBase
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<any>) => {
             setValue(e.target.value);
             e.stopPropagation();
             e.preventDefault();

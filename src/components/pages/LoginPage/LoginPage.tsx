@@ -9,15 +9,17 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Formik } from "formik";
+import { Formik, FormikProps } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
+import { User } from "../../../types/user.type";
 import { RootReducers } from "../../../reducers";
 import * as loginActions from "./../../../actions/login.action";
-import { SxProps } from "@mui/system";
 
-export default (props: any) => {
+type LoginProps = {};
+
+export default (props: LoginProps) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -38,7 +40,7 @@ export default (props: any) => {
     handleSubmit,
     setFieldValue,
     isSubmitting,
-  }: any) => {
+  }: FormikProps<User>) => {
     return (
       <form noValidate onSubmit={handleSubmit}>
         <TextField
@@ -94,6 +96,8 @@ export default (props: any) => {
     );
   };
 
+  const initialValue: User = { username: "", password: "" };
+
   return (
     <Box sx={classes.root}>
       <Card sx={{ maxWidth: 345 }}>
@@ -109,7 +113,7 @@ export default (props: any) => {
             Login
           </Typography>
           <Formik
-            initialValues={{ username: "", password: "" }}
+            initialValues={initialValue}
             onSubmit={(values, { setSubmitting }) => {
               dispatch(loginActions.handleLogin(values, history));
               setSubmitting(false);

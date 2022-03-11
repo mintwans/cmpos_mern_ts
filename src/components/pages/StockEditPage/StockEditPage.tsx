@@ -3,16 +3,19 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, FormikProps } from "formik";
 import { TextField } from "formik-material-ui";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { RootReducers } from "../../../reducers";
+import { Product } from "../../../types/product.type";
 import * as stockEditActions from "./../../../actions/stock.edit.action";
 import { imageUrl } from "./../../../constants";
 
-export default (props: any) => {
+export default () => {
+  const match = useRouteMatch<any>();
+  const history = useHistory();
   const dispatch = useDispatch();
   const [isReady, setIsReady] = React.useState(false);
   const stockEditReducer = useSelector(
@@ -20,12 +23,12 @@ export default (props: any) => {
   );
 
   useEffect(() => {
-    let id = props.match.params.id;
+    let id = match.params.id;
     dispatch(stockEditActions.getProductById(id));
     setTimeout(() => setIsReady(true), 100);
   }, []);
 
-  const showForm = ({ values, setFieldValue }: any) => {
+  const showForm = ({ values, setFieldValue }: FormikProps<Product>) => {
     return (
       <Form>
         <Card>
@@ -73,7 +76,7 @@ export default (props: any) => {
               </span>
               <input
                 type="file"
-                onChange={(e: any) => {
+                onChange={(e: React.ChangeEvent<any>) => {
                   e.preventDefault();
                   setFieldValue("file", e.target.files[0]); // for upload
                   setFieldValue(
@@ -129,29 +132,28 @@ export default (props: any) => {
     }
   };
 
+  const initialValues: Product = { name: "Loading...", stock: 0, price: 0 };
+
   return (
     <div>
       <Formik
+        component={showForm}
         enableReinitialize
         initialValues={
-          stockEditReducer.result
-            ? stockEditReducer.result
-            : { name: "loading", price: 0, stock: 0 }
+          stockEditReducer.result ? stockEditReducer.result : initialValues
         }
-        onSubmit={(values: any, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting }) => {
           let formData = new FormData();
-          formData.append("product_id", values.product_id);
+          formData.append("product_id", String(values.product_id));
           formData.append("name", values.name);
-          formData.append("price", values.price);
-          formData.append("stock", values.stock);
+          formData.append("price", String(values.price));
+          formData.append("stock", String(values.stock));
           if (values.file) {
             formData.append("image", values.file);
           }
-          dispatch(stockEditActions.updateProduct(formData, props.history));
+          dispatch(stockEditActions.updateProduct(formData, history));
         }}
-      >
-        {isReady ? (props) => showForm(props) : null}
-      </Formik>
+      />
     </div>
   );
 };

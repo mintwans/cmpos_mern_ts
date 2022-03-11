@@ -24,11 +24,10 @@ uploadImage = async (files, doc) => {
   }
 };
 
-router.get("/product",  async (req, res) => {
+router.get("/product", async (req, res) => {
   let doc = await Products.find({}).sort({ created: -1 });
   res.json(doc);
 });
-
 
 // Add Product
 router.post("/product", async (req, res) => {
@@ -57,7 +56,6 @@ router.get("/product/name/:keyword", async (req, res) => {
   let doc = await Products.find(query);
   res.json(doc);
 });
-
 
 // Delete Product
 router.delete("/product/id/:id", async (req, res) => {

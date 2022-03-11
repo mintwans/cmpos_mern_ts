@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { TransactionRequest } from "./../../../models/transaction";
+import { TransactionRequest } from "../../../types/transaction.type";
 import * as shopActions from "./../../../actions/shop.action";
 import { Formik, Form, Field } from "formik";
 import { TextField } from "formik-material-ui";
@@ -42,15 +42,23 @@ export default (props: any) => {
   };
 
   const onClickSubmit = (values: any) => {
-    let trans = new TransactionRequest();
-    trans.total = shopReducer.mTotalPrice;
-    trans.paid = values.given;
-    trans.change = values.change;
-    trans.payment_type = "cash";
-    trans.payment_detail = "full";
-    trans.seller_id = "sr0001";
-    trans.buyer_id = "by0000";
-    trans.order_list = props.order;
+    let trans: TransactionRequest = {
+      subtotal: 0,
+      discount: 0,
+      shipping_cost: 0,
+      tax_percent: 0,
+      total: shopReducer.mTotalPrice,
+      paid: values.given,
+      change: values.change,
+      order_list: props.order,
+      payment_type: "cash",
+      payment_detail: "full",
+      staff_id: "x",
+      seller_id: "sr0001",
+      buyer_id: "by0000",
+      comment: "x",
+    };
+
     dispatch(shopActions.submitPayment(trans));
   };
 
@@ -183,7 +191,7 @@ export default (props: any) => {
                 sx={{ height: 100, fontSize: 20 }}
                 fullWidth
                 variant="contained"
-                color="primary"
+                color="secondary"
                 onClick={() => onClickExact(setFieldValue)}
               >
                 EXACT

@@ -4,6 +4,8 @@ import {
   REGISTER_SUCCESS,
   server,
 } from "../constants";
+import { RegisterResult } from "../types/auth-result.type";
+import { HistoryProp } from "../types/history.type";
 import { httpClient } from "../utils/HttpClient";
 
 export const setRegisterStateToFetch = () => ({
@@ -21,11 +23,14 @@ export const setRegisterStateToFailed = (payload: any) => ({
 });
 
 // Called by Register Component
-export const register = (value: any, history: any) => {
+export const register = (value: any, history: HistoryProp) => {
   return async (dispatch: any) => {
     try {
       dispatch(setRegisterStateToFetch()); // fetching
-      let result = await httpClient.post(server.REGISTER_URL, value);
+      let result = await httpClient.post<RegisterResult>(
+        server.REGISTER_URL,
+        value
+      );
       if (result.data.result === "ok") {
         dispatch(setRegisterStateToSuccess(result));
         history.goBack();

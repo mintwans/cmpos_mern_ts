@@ -25,6 +25,9 @@ router.get("/transaction", async (req, res) => {
     //   },
     // },
     {
+      $sort: { timestamp: -1 },
+    },
+    {
       $lookup: {
         from: "users",
         localField: "staff_id",

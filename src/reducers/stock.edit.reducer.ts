@@ -3,15 +3,16 @@ import {
   STOCK_EDIT_FETCHING,
   STOCK_EDIT_SUCCESS,
 } from "../constants";
+import { Product } from "../types/product.type";
 
 export interface StockEditState {
-  result: any;
+  result: Product;
   isFetching: boolean;
   isError: boolean;
 }
 
 const initialState: StockEditState = {
-  result: [],
+  result: { name: "", price: 0, stock: 0 },
   isFetching: false,
   isError: false,
 };

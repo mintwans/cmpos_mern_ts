@@ -94,13 +94,13 @@ export default (props: any) => {
     const { result } = stockReducer;
     return (
       <Container sx={{ height: "80vh", overflowY: "scroll", padding: 1 }}>
-        <Grid container spacing={1} sx={classes.productContainer}>
+        <Grid container spacing={1}>
           {result !== null &&
             result.map((item, i) => (
               <Grid
                 key={i}
                 item
-                xs={4}
+                xs={3}
                 onClick={() => dispatch(shopActions.addOrder(item))}
                 style={{ cursor: "pointer" }}
               >
@@ -109,7 +109,7 @@ export default (props: any) => {
                     <CardMedia
                       component="img"
                       alt="Contemplative Reptile"
-                      height={150}
+                      height={120}
                       image={`${imageUrl}/images/${item.image}`}
                       title="Contemplative Reptile"
                     />
@@ -167,7 +167,7 @@ export default (props: any) => {
   return (
     <Grid container spacing={2} sx={{ height: "80vh" }}>
       {/* Left section */}
-      <Grid item xs={8}>
+      <Grid item xs={8} sx={{ backgroundColor: "#707070" }}>
         {shopReducer.mIsPaymentMade ? renderPayment() : renderProductRows()}
       </Grid>
 
@@ -229,9 +229,9 @@ export default (props: any) => {
           {shopReducer.mTotalPrice > 0 && !shopReducer.mIsPaymentMade && (
             <Button
               fullWidth
-              sx={{ marginBottom: 2 }}
+              sx={{ marginBottom: 2, marginTop: 10 }}
               variant="contained"
-              color="secondary"
+              color="primary"
               onClick={() => dispatch(shopActions.togglePaymentState())}
             >
               <Typography variant="h4">Payment</Typography>
