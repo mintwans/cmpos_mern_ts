@@ -31,7 +31,7 @@ import { useEffect, useState } from "react";
 import Moment from "react-moment";
 import NumberFormat from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RootReducers } from "../../../reducers";
 import * as stockActions from "./../../../actions/stock.action";
 import { imageUrl } from "./../../../constants";
@@ -41,6 +41,7 @@ import { useDebounce, useDebounceCallback } from "@react-hook/debounce";
 export default (props: any) => {
   const stockReducer = useSelector((state: RootReducers) => state.stockReducer);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -253,7 +254,7 @@ export default (props: any) => {
                       aria-label="edit"
                       size="large"
                       onClick={() => {
-                        props.history.push("/stock/edit/" + item.product_id);
+                        navigate("/stock/edit/" + item.product_id);
                       }}
                     >
                       <EditIcon fontSize="inherit" />

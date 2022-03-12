@@ -8,7 +8,7 @@ import InputBase from "@mui/material/InputBase";
 import * as React from "react";
 import MailIcon from "@mui/icons-material/Mail";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as loginActions from "./../../../actions/login.action";
 
 const drawerWidth = 240;
@@ -73,9 +73,9 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ handleDrawerOpen, open }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const logout = () => {
-    dispatch(loginActions.handleLogout(history));
+    dispatch(loginActions.handleLogout());
   };
 
   return (

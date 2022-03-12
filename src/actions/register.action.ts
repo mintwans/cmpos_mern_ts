@@ -7,7 +7,7 @@ import {
 import { RegisterResult } from "../types/auth-result.type";
 import { HistoryProp } from "../types/history.type";
 import { httpClient } from "../utils/HttpClient";
-
+import { history } from "../index";
 export const setRegisterStateToFetch = () => ({
   type: REGISTER_FETCHING,
 });
@@ -23,7 +23,7 @@ export const setRegisterStateToFailed = (payload: any) => ({
 });
 
 // Called by Register Component
-export const register = (value: any, history: HistoryProp) => {
+export const register = (value: any) => {
   return async (dispatch: any) => {
     try {
       dispatch(setRegisterStateToFetch()); // fetching
@@ -33,7 +33,7 @@ export const register = (value: any, history: HistoryProp) => {
       );
       if (result.data.result === "ok") {
         dispatch(setRegisterStateToSuccess(result));
-        history.goBack();
+        history.back();
       } else {
         dispatch(setRegisterStateToFailed(result));
       }

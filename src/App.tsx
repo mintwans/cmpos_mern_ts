@@ -3,14 +3,7 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
 import * as React from "react";
-import {
-  BrowserRouter as Router,
-  Link,
-  Redirect,
-  Route,
-  RouteProps,
-  Switch,
-} from "react-router-dom";
+import { Link, Navigate, Route, RouteProps, Routes } from "react-router-dom";
 import Header from "./components/layouts/Header";
 import Menu from "./components/layouts/Menu";
 import LoginPage from "./components/pages/LoginPage";
@@ -24,6 +17,8 @@ import TransactionPage from "./components/pages/TransactionPage";
 import * as loginActions from "./actions/login.action";
 import { RootReducers } from "./reducers";
 import { useDispatch, useSelector } from "react-redux";
+import ProtectedRoutes from "./router/protected.routes";
+import PublicRoutes from "./router/public.routes";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -62,97 +57,68 @@ export default function App(props: AppProps) {
 
   // Protected Route
   type CommonRouteProps = RouteProps & {
-    component: React.FC;
+    element: any;
   };
-  const SecuredRoute = ({
-    component: Component,
-    ...rest
-  }: CommonRouteProps) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        // ternary condition
-        loginReducer.result ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-  );
+  const SecuredRoute = ({ element: Component, ...rest }: CommonRouteProps) => {
+    return loginReducer.result ? (
+      <Component {...props} />
+    ) : (
+      <Navigate to="/login" />
+    );
+  };
 
   // Login Route
-  const LoginRoute = ({ component: Component, ...rest }: CommonRouteProps) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        loginReducer.result ? (
-          <Redirect to="/stock" />
-        ) : (
-          <Component {...props} />
-        )
-      }
-    />
-  );
+  const LoginRoute = ({ element: Component, ...rest }: CommonRouteProps) => {
+    return loginReducer.result ? (
+      <Navigate to="/stock" />
+    ) : (
+      <Navigate to="/login" />
+    );
+  };
 
   return (
     <ThemeProvider theme={theme}>
-      <Router
-        basename={process.env.REACT_APP_IS_PRODUCTION === "1" ? "/demo" : ""}
-      >
-        <Box sx={{ display: "flex" }}>
-          <CssBaseline />
-          {/* Header */}
-          {loginReducer.result && (
-            <Header open={open} handleDrawerOpen={handleDrawerOpen} />
-          )}
-          {/* Menu */}
-          {loginReducer.result && (
-            <Menu open={open} handleDrawerClose={handleDrawerClose} />
-          )}
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              p: 3,
-            }}
-          >
-            <Container>
-              <DrawerHeader />
-              <Switch>
-                {/* Pages Define */}
-                <LoginRoute path="/login" component={LoginPage} />
-                <Route path="/register" component={RegisterPage} />
-                <SecuredRoute path="/shop" component={ShopPage} />
-                <SecuredRoute
-                  exact={true}
-                  path="/stock"
-                  component={StockPage}
-                />
-                <SecuredRoute
-                  path="/stock/create"
-                  component={StockCreatePage}
-                />
-                <SecuredRoute
-                  path="/stock/edit/:id"
-                  component={StockEditPage}
-                />
-                <SecuredRoute path="/report" component={ReportPage} />
-                <SecuredRoute path="/transaction" component={TransactionPage} />
-                <Route
-                  exact={true}
-                  path="/"
-                  component={() => <Redirect to="/login" />}
-                />
-                <Route path="*">
-                  {/* is equal to component={NotFoundPage} */}
-                  <NotFound />
-                </Route>
-              </Switch>
-            </Container>
-          </Box>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        {/* Header */}
+        {loginReducer.result && (
+          <Header open={open} handleDrawerOpen={handleDrawerOpen} />
+        )}
+        {/* Menu */}
+        {loginReducer.result && (
+          <Menu open={open} handleDrawerClose={handleDrawerClose} />
+        )}
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+          }}
+        >
+          <Container>
+            <DrawerHeader />
+            <Routes>
+              {/** Protected Routes */}
+              {/** Wrap all Route under ProtectedRoutes element */}
+              <Route path="/" element={<ProtectedRoutes />}>
+                <Route path="/shop" element={<ShopPage />} />
+                <Route path="/stock" element={<StockPage />} />
+                <Route path="/report" element={<ReportPage />} />
+                <Route path="/stock/create" element={<StockCreatePage />} />
+                <Route path="/stock/edit/:id" element={<StockEditPage />} />
+                <Route path="/report" element={<ReportPage />} />
+                <Route path="/transaction" element={<TransactionPage />} />
+              </Route>
+
+              {/** Wrap all Route under PublicRoutes element */}
+              <Route path="/" element={<PublicRoutes />}>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+              </Route>
+            </Routes>
+          </Container>
         </Box>
-      </Router>
+      </Box>
     </ThemeProvider>
   );
 }

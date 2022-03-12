@@ -9,6 +9,10 @@ import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import reducers from "./reducers";
 import logger from "redux-logger";
+import { BrowserRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
+
+export const history = createBrowserHistory();
 
 let middlewares: Middleware[] = [thunk];
 
@@ -18,11 +22,11 @@ if (process.env.REACT_APP_IS_PRODUCTION != "1") {
 export const store = createStore(reducers, applyMiddleware(...middlewares));
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

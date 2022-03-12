@@ -7,13 +7,13 @@ import { Field, Form, Formik, FormikProps } from "formik";
 import { TextField } from "formik-material-ui";
 
 import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Product } from "../../../types/product.type";
 import * as stockActions from "./../../../actions/stock.action";
 
 export default () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const showForm = ({ values, setFieldValue }: FormikProps<Product>) => {
     return (
@@ -125,7 +125,7 @@ export default () => {
           formData.append("price", String(values.price));
           formData.append("stock", String(values.stock));
           formData.append("image", String(values.file));
-          dispatch(stockActions.addProduct(formData, history));
+          dispatch(stockActions.addProduct(formData));
           setSubmitting(false);
         }}
       >

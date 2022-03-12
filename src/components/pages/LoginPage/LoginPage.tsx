@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import { Formik, FormikProps } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { User } from "../../../types/user.type";
 import { RootReducers } from "../../../reducers";
 import * as loginActions from "./../../../actions/login.action";
@@ -21,7 +21,7 @@ type LoginProps = {};
 
 export default (props: LoginProps) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const loginReducer = useSelector((state: RootReducers) => state.loginReducer);
   const classes: any = {
@@ -29,10 +29,6 @@ export default (props: LoginProps) => {
     submitBtn: { marginTop: 4 },
     canelBtn: { marginTop: 2 },
   };
-
-  useEffect(() => {
-    // loginActions.isLoggedIn() && props.history.push("/stock");
-  }, []);
 
   const showForm = ({
     values,
@@ -115,7 +111,7 @@ export default (props: LoginProps) => {
           <Formik
             initialValues={initialValue}
             onSubmit={(values, { setSubmitting }) => {
-              dispatch(loginActions.handleLogin(values, history));
+              dispatch(loginActions.handleLogin(values));
               setSubmitting(false);
             }}
           >

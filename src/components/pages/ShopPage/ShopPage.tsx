@@ -167,7 +167,7 @@ export default (props: any) => {
   return (
     <Grid container spacing={2} sx={{ height: "80vh" }}>
       {/* Left section */}
-      <Grid item xs={8} sx={{ backgroundColor: "#707070" }}>
+      <Grid item xs={8} sx={{ backgroundColor: "white", overflow: "hidden" }}>
         {shopReducer.mIsPaymentMade ? renderPayment() : renderProductRows()}
       </Grid>
 

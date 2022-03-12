@@ -5,7 +5,7 @@ import {
   STOCK_EDIT_SUCCESS,
 } from "../constants";
 import { httpClient } from "../utils/HttpClient";
-
+import { history } from "../index";
 export const setStateStockToSuccess = (payload: any) => ({
   type: STOCK_EDIT_SUCCESS,
   payload,
@@ -19,10 +19,10 @@ const setStateStockToFailed = () => ({
   type: STOCK_EDIT_FAILED,
 });
 
-export const updateProduct = (formData: any, history: any) => {
+export const updateProduct = (formData: any) => {
   return async (dispatch: any) => {
     await httpClient.put(server.PRODUCT_URL, formData);
-    history.goBack();
+    history.back();
   };
 };
 

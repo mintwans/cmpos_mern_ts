@@ -5,9 +5,9 @@ import {
   STOCK_FETCHING,
   STOCK_SUCCESS,
 } from "../constants";
-import { HistoryProp } from "../types/history.type";
 import { Product } from "../types/product.type";
 import { httpClient } from "../utils/HttpClient";
+import { history } from "../index";
 
 export const setStateStockToSuccess = (payload: Product[]) => ({
   type: STOCK_SUCCESS,
@@ -39,17 +39,17 @@ export const getProducts = () => {
   };
 };
 
-export const addProduct = (formData: any, history: HistoryProp) => {
+export const addProduct = (formData: FormData) => {
   return async (dispatch: any) => {
     await httpClient.post(server.PRODUCT_URL, formData);
-    history.goBack();
+    history.back();
   };
 };
 
-export const updateProduct = (formData: any, history: HistoryProp) => {
+export const updateProduct = (formData: FormData) => {
   return async (dispatch: any) => {
     await httpClient.put(server.PRODUCT_URL, formData);
-    history.goBack();
+    history.back();
   };
 };
 

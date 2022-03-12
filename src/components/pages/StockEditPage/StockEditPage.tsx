@@ -7,15 +7,15 @@ import { Field, Form, Formik, FormikProps } from "formik";
 import { TextField } from "formik-material-ui";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useNavigate, useMatch } from "react-router-dom";
 import { RootReducers } from "../../../reducers";
 import { Product } from "../../../types/product.type";
 import * as stockEditActions from "./../../../actions/stock.edit.action";
 import { imageUrl } from "./../../../constants";
 
 export default () => {
-  const match = useRouteMatch<any>();
-  const history = useHistory();
+  const match = useMatch("/stock/edit/:id");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isReady, setIsReady] = React.useState(false);
   const stockEditReducer = useSelector(
@@ -23,7 +23,7 @@ export default () => {
   );
 
   useEffect(() => {
-    let id = match.params.id;
+    let id = match?.params.id;
     dispatch(stockEditActions.getProductById(id));
     setTimeout(() => setIsReady(true), 100);
   }, []);
@@ -151,7 +151,7 @@ export default () => {
           if (values.file) {
             formData.append("image", values.file);
           }
-          dispatch(stockEditActions.updateProduct(formData, history));
+          dispatch(stockEditActions.updateProduct(formData));
         }}
       />
     </div>

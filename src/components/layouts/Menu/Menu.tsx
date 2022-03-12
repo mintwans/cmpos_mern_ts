@@ -90,6 +90,18 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+const MyNavLink = React.forwardRef<any, any>((props, ref) => (
+  <NavLink
+    ref={ref}
+    to={props.to}
+    className={({ isActive }) =>
+      `${props.className} ${isActive ? props.activeClassName : ""}`
+    }
+  >
+    {props.children}
+  </NavLink>
+));
+
 type MenuProps = {
   open: boolean;
   handleDrawerClose: () => void;
@@ -136,7 +148,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
       >
         {/* Shop */}
         <ListItem
-          component={NavLink}
+          component={MyNavLink}
           to="/shop"
           button
           key="shop"
@@ -151,7 +163,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
 
         {/* Stock */}
         <ListItem
-          component={NavLink}
+          component={MyNavLink}
           to="/stock"
           button
           key="stock"
@@ -166,7 +178,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
 
         {/* Report */}
         <ListItem
-          component={NavLink}
+          component={MyNavLink}
           to="/report"
           button
           key="report"
@@ -181,7 +193,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
 
         {/* Transaction */}
         <ListItem
-          component={NavLink}
+          component={MyNavLink}
           to="/transaction"
           button
           key="transaction"

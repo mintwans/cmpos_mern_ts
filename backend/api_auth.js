@@ -16,14 +16,14 @@ router.post("/login", async (req, res) => {
         username: doc.username,
       };
 
-      let token = jwt.sign(payload, "10000000"); // unit is millisec
-      const refreshToken = randtoken.uid(256);
+      let token = jwt.sign(payload, "10000"); // unit is millisec
+      const refreshToken = randtoken.uid(256); // 12341234
       refreshTokens[refreshToken] = req.body.username;
 
       res.json({
         result: "ok",
         token,
-        refreshToken,
+        refreshToken, // 12341234
         message: "Login successfully",
       });
     } else {

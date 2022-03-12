@@ -92,67 +92,6 @@ export default (props: any) => {
     },
   ];
 
-  const orderColumns = [
-    {
-      title: "ID",
-      field: "product_id",
-      render: (item: any) => (
-        <Typography variant="body1">{item.product_id}</Typography>
-      ),
-    },
-    {
-      title: "IMAGE",
-      field: "image",
-      cellStyle: { padding: 0 },
-      render: (item: any) => (
-        <img
-          src={`${imageUrl}/images/${item.image}?dummy=${Math.random()}`}
-          style={{ width: 80, height: 80, borderRadius: "5%" }}
-        />
-      ),
-    },
-    {
-      title: "NAME",
-      cellStyle: { minWidth: 400 },
-      field: "name",
-      render: (item: any) => (
-        <Typography variant="body1">{item.name}</Typography>
-      ),
-    },
-    {
-      title: "PRICE",
-      field: "price",
-      render: (item: any) => (
-        <Typography variant="body1">
-          <NumberFormat
-            value={item.price}
-            displayType={"text"}
-            thousandSeparator={true}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            prefix={"฿"}
-          />
-        </Typography>
-      ),
-    },
-    {
-      title: "STOCK",
-      field: "stock",
-      render: (item: any) => (
-        <Typography variant="body1">
-          <NumberFormat
-            value={item.stock}
-            displayType={"text"}
-            thousandSeparator={true}
-            decimalScale={0}
-            fixedDecimalScale={true}
-            suffix={" pcs"}
-          />
-        </Typography>
-      ),
-    },
-  ];
-
   return (
     <Paper sx={{ padding: 4 }}>
       <Grid container spacing={2} sx={{ height: "80vh" }}>

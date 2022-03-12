@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { User } from "../../../types/user.type";
 import * as registerActions from "./../../../actions/register.action";
 import { SxProps } from "@mui/system";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const classes: any = {
   root: { display: "flex", justifyContent: "center", alignItems: "center" },
@@ -22,7 +22,7 @@ const classes: any = {
 type RegisterProps = {};
 export default (props: RegisterProps) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const showForm = ({
     values,
@@ -70,7 +70,7 @@ export default (props: RegisterProps) => {
         </Button>
         <Button
           sx={classes.canelBtn}
-          onClick={() => history.goBack()}
+          onClick={() => navigate(-1)}
           type="button"
           fullWidth
           variant="outlined"
@@ -92,7 +92,7 @@ export default (props: RegisterProps) => {
           <Formik
             initialValues={initialValue}
             onSubmit={(values, { setSubmitting }) => {
-              dispatch(registerActions.register(values, history));
+              dispatch(registerActions.register(values));
               setSubmitting(false);
             }}
           >

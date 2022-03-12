@@ -1,4 +1,3 @@
-import { useHistory } from "react-router";
 import {
   LOGIN_FAILED,
   LOGIN_FETCHING,
@@ -10,6 +9,7 @@ import { LoginResult } from "../types/auth-result.type";
 import { HistoryProp } from "../types/history.type";
 import { User } from "../types/user.type";
 import { httpClient } from "../utils/HttpClient";
+import { history } from "../index";
 
 // Send action type and payload to Reducer
 export const setLoginFetchingToState = () => ({
@@ -29,7 +29,7 @@ export const setLoginLogoutToState = () => ({
   type: LOGOUT,
 });
 
-export const handleLogin = (value: User, history: HistoryProp) => {
+export const handleLogin = (value: User) => {
   return async (dispatch: any) => {
     try {
       dispatch(setLoginFetchingToState()); // fetching
@@ -52,7 +52,7 @@ export const handleLogin = (value: User, history: HistoryProp) => {
   };
 };
 
-export const handleLogout = (history: any) => {
+export const handleLogout = () => {
   return (dispatch: any) => {
     localStorage.removeItem(server.TOKEN_KEY);
     localStorage.removeItem(server.REFRESH_TOKEN_KEY);
