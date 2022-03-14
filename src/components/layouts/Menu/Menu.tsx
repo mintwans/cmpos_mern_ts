@@ -80,6 +80,7 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -111,13 +112,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
   const theme = useTheme();
 
   return (
-    <Drawer
-      variant="permanent"
-      open={open}
-      sx={{
-        backgroundImage: `${process.env.PUBLIC_URL}/images/background_menu.jpg`,
-      }}
-    >
+    <Drawer variant="permanent" open={open}>
       <DrawerHeader sx={{ backgroundColor: "#1976d2" }}>
         <Stack direction="row" alignItems="center">
           <img
@@ -141,11 +136,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
         />
       )}
       <Divider />
-      <List
-        sx={{
-          background: `${process.env.PUBLIC_URL}/images/background_menu.jpg`,
-        }}
-      >
+      <List>
         {/* Shop */}
         <ListItem
           component={MyNavLink}

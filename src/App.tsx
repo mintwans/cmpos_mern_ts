@@ -19,7 +19,7 @@ import { RootReducers } from "./reducers";
 import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoutes from "./router/protected.routes";
 import PublicRoutes from "./router/public.routes";
-
+const drawerWidth = 240;
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -29,7 +29,29 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
+// https://mui.com/customization/default-theme/
 const theme = createTheme({
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundImage:
+            "url(" +
+            `${process.env.PUBLIC_URL}/images/background_menu.jpg` +
+            ")",
+          width: drawerWidth,
+        },
+      },
+    },
+  },
+  spacing: 8,
+  typography: {
+    fontFamily: "Smooch+Sans",
+    fontWeightLight: 100,
+    fontWeightRegular: 200,
+    fontWeightMedium: 300,
+    fontWeightBold: 400,
+  },
   palette: {
     background: {
       default: "#CFD2D6",
@@ -114,6 +136,8 @@ export default function App(props: AppProps) {
               <Route path="/" element={<PublicRoutes />}>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="*" element={<Navigate to="/login" />} />
               </Route>
             </Routes>
           </Container>
