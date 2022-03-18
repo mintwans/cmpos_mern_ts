@@ -7,13 +7,11 @@ import NewReleasesIcon from "@mui/icons-material/NewReleases";
 import SearchIcon from "@mui/icons-material/Search";
 import StarIcon from "@mui/icons-material/Star";
 import {
-  Avatar,
   Box,
   Divider,
   Grid,
   IconButton,
   InputBase,
-  Stack,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -23,14 +21,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Paper from "@mui/material/Paper";
-import {
-  DataGrid,
-  GridColDef,
-  GridColumns,
-  GridRenderCellParams,
-  GridRowId,
-  GridValueGetterParams,
-} from "@mui/x-data-grid";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
 import NumberFormat from "react-number-format";
@@ -58,96 +54,6 @@ export default (props: any) => {
   useEffect(() => {
     dispatch(stockActions.getProducts());
   }, []);
-
-  const stockColumns: GridColDef[] = [
-    {
-      headerName: "ID",
-      field: "product_id",
-      width: 50,
-    },
-    {
-      headerName: "IMG",
-      field: "image",
-      width: 80,
-      renderCell: ({ value }: GridRenderCellParams<string>) => (
-        <img
-          src={`${imageUrl}/images/${value}?dummy=${Math.random()}`}
-          style={{ width: 70, height: 70, borderRadius: "5%" }}
-        />
-      ),
-    },
-    {
-      headerName: "NAME",
-      field: "name",
-      width: 500,
-    },
-    {
-      headerName: "STOCK",
-      width: 120,
-      field: "stock",
-      renderCell: ({ value }: GridRenderCellParams<string>) => (
-        <Typography variant="body1">
-          <NumberFormat
-            value={value}
-            displayType={"text"}
-            thousandSeparator={true}
-            decimalScale={0}
-            fixedDecimalScale={true}
-          />
-        </Typography>
-      ),
-    },
-    {
-      headerName: "PRICE",
-      field: "price",
-      width: 120,
-      renderCell: ({ value }: GridRenderCellParams<string>) => (
-        <Typography variant="body1">
-          <NumberFormat
-            value={value}
-            displayType={"text"}
-            thousandSeparator={true}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            prefix={"฿"}
-          />
-        </Typography>
-      ),
-    },
-    {
-      headerName: "TIME",
-      field: "created",
-      width: 120,
-    },
-    {
-      headerName: "ACTION",
-      field: ".",
-      width: 120,
-      renderCell: ({ row }: GridRenderCellParams<string>) => (
-        <Stack direction="row">
-          <IconButton
-            aria-label="edit"
-            size="large"
-            onClick={() => {
-              navigate("/stock/edit/" + row.product_id);
-            }}
-          >
-            <EditIcon fontSize="inherit" />
-          </IconButton>
-          <IconButton
-            aria-label="delete"
-            size="large"
-            onClick={() => {
-              setSelectedProduct(row);
-              setOpenDialog(true);
-            }}
-          >
-            <DeleteIcon fontSize="inherit" />
-          </IconButton>
-        </Stack>
-      ),
-    },
-  ];
 
   const handleDeleteConfirm = () => {
     dispatch(stockActions.deleteProduct(selectedProduct.product_id));
@@ -276,14 +182,101 @@ export default (props: any) => {
         </IconButton>
       </Paper>
 
-      <DataGrid
-        sx={{ backgroundColor: "white", height: "50vh" }}
-        getRowId={(row) => row.product_id}
-        onRowClick={(e) => {}}
-        rows={stockReducer.result}
-        columns={stockColumns}
-        rowsPerPageOptions={[5]}
-      />
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell align="left">Image</TableCell>
+              <TableCell align="left">Name</TableCell>
+              <TableCell align="right">Price</TableCell>
+              <TableCell align="right">Stock</TableCell>
+              <TableCell align="right">Created</TableCell>
+              <TableCell align="left">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {stockReducer.result.map((item: any) => (
+              <TableRow hover key={item.product_id} sx={{ padding: 0 }}>
+                {/* Id */}
+                <TableCell component="th" scope="row">
+                  <Typography variant="body1">{item.product_id}</Typography>
+                </TableCell>
+
+                {/* Image */}
+                <TableCell align="left">
+                  <img
+                    src={`${imageUrl}/images/${
+                      item.image
+                    }?dummy=${Math.random()}`}
+                    style={{ width: 70, height: 70, borderRadius: "5%" }}
+                  />
+                </TableCell>
+                <TableCell align="left">
+                  <Typography variant="body1">{item.name}</Typography>
+                </TableCell>
+                {/* Price */}
+                <TableCell align="right">
+                  <Typography variant="body1">
+                    <NumberFormat
+                      value={item.price}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                      prefix={"฿"}
+                    />
+                  </Typography>
+                </TableCell>
+                {/* Stock */}
+                <TableCell align="right">
+                  <Typography variant="body1">
+                    <NumberFormat
+                      value={item.stock}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      decimalScale={0}
+                      fixedDecimalScale={true}
+                    />
+                  </Typography>
+                </TableCell>
+                {/* Create */}
+                <TableCell align="right">
+                  <Typography>
+                    <Moment format="DD/MM/YYYY">{item.created}</Moment>
+                  </Typography>
+                </TableCell>
+
+                {/* Actions */}
+                <TableCell align="left">
+                  <Box sx={{ display: "flex", flexDirection: "row" }}>
+                    <IconButton
+                      aria-label="edit"
+                      size="large"
+                      onClick={() => {
+                        navigate("/stock/edit/" + item.product_id);
+                      }}
+                    >
+                      <EditIcon fontSize="inherit" />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      size="large"
+                      onClick={() => {
+                        setSelectedProduct(item);
+                        setOpenDialog(true);
+                      }}
+                    >
+                      <DeleteIcon fontSize="inherit" />
+                    </IconButton>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
       {showDialog()}
     </Box>
   );
