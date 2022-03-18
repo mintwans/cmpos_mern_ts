@@ -12,8 +12,10 @@ import { User } from "../../../types/user.type";
 import * as registerActions from "./../../../actions/register.action";
 import { SxProps } from "@mui/system";
 import { useNavigate } from "react-router-dom";
+import { Theme } from "@emotion/react";
 
-const classes: any = {
+// add any to fix error temporary
+const classes: SxProps<Theme> | any = {
   root: { display: "flex", justifyContent: "center", alignItems: "center" },
   submitBtn: { marginTop: 4 },
   canelBtn: { marginTop: 2 },

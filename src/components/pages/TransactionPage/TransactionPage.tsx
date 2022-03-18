@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as transactionActions from "./../../../actions/transaction.action";
 import Moment from "react-moment";
 import NumberFormat from "react-number-format";
+import AddIcon from "@mui/icons-material/Add";
 
 import { imageUrl } from "./../../../constants";
 import {
@@ -89,6 +90,15 @@ export default (props: any) => {
       renderCell: (params: GridRenderCellParams<any>) => (
         <Typography>{JSON.parse(params.value).length} SKU</Typography>
       ),
+    },
+    {
+      headerName: "IMG",
+      width: 50,
+      field: "order_list",
+      renderCell: (params: GridRenderCellParams<any>) => {
+        const orderList = JSON.parse(params.value);
+        return <Avatar src={`${imageUrl}/images/${orderList[0].image}`} />;
+      },
     },
   ];
 
