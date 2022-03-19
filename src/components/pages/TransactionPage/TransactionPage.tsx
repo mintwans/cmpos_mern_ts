@@ -107,6 +107,7 @@ export default (props: any) => {
       <Grid container spacing={2} sx={{ height: "80vh" }}>
         <Grid item xs={7}>
           <DataGrid
+            getRowId={(row) => row.transaction_id}
             onSelectionModelChange={(newSelectionModel) => {
               setSelectedId(newSelectionModel[0]);
             }}

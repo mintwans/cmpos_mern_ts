@@ -54,7 +54,7 @@ const theme = createTheme({
   },
   palette: {
     background: {
-      default: "#CFD2D6",
+      default: "#EEE",
     },
   },
 });

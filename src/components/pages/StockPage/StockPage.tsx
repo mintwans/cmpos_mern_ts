@@ -1,19 +1,21 @@
-import AddIcon from "@mui/icons-material/Add";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import AssignmentReturnIcon from "@mui/icons-material/AssignmentReturn";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import NewReleasesIcon from "@mui/icons-material/NewReleases";
-import SearchIcon from "@mui/icons-material/Search";
-import StarIcon from "@mui/icons-material/Star";
+import Add from "@mui/icons-material/Add";
+import AddShoppingCart from "@mui/icons-material/AddShoppingCart";
+import AssignmentReturn from "@mui/icons-material/AssignmentReturn";
+import Delete from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
+import NewReleases from "@mui/icons-material/NewReleases";
+import Search from "@mui/icons-material/Search";
+import Star from "@mui/icons-material/Star";
 import {
   Avatar,
   Box,
   Divider,
+  Fab,
   Grid,
   IconButton,
   InputBase,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -41,6 +43,72 @@ import * as stockActions from "./../../../actions/stock.action";
 import { imageUrl } from "./../../../constants";
 import StockCard from "./../../fragments/StockCard/StockCard";
 import { useDebounce, useDebounceCallback } from "@react-hook/debounce";
+import { Clear } from "@mui/icons-material";
+
+interface QuickSearchToolbarProps {
+  clearSearch: () => void;
+  onChange: () => void;
+  value: string;
+}
+
+function QuickSearchToolbar(props: QuickSearchToolbarProps) {
+  return (
+    <Box
+      sx={{
+        p: 0.5,
+        pb: 0,
+      }}
+    >
+      <TextField
+        variant="standard"
+        value={props.value}
+        onChange={props.onChange}
+        placeholder="Search…"
+        InputProps={{
+          startAdornment: <Search fontSize="small" />,
+          endAdornment: (
+            <IconButton
+              title="Clear"
+              aria-label="Clear"
+              size="small"
+              style={{ visibility: props.value ? "visible" : "hidden" }}
+              onClick={props.clearSearch}
+            >
+              <Clear fontSize="small" />
+            </IconButton>
+          ),
+        }}
+        sx={{
+          width: {
+            xs: 1,
+            sm: "auto",
+          },
+          m: (theme) => theme.spacing(1, 0.5, 1.5),
+          "& .MuiSvgIcon-root": {
+            mr: 0.5,
+          },
+          "& .MuiInput-underline:before": {
+            borderBottom: 1,
+            borderColor: "divider",
+          },
+        }}
+      />
+      <Fab
+        color="primary"
+        aria-label="add"
+        component={Link}
+        to="/stock/create"
+        sx={{
+          position: "absolute",
+          top: 10,
+          right: 10,
+        }}
+      >
+        <Add />
+      </Fab>
+    </Box>
+  );
+}
 
 export default (props: any) => {
   const stockReducer = useSelector((state: RootReducers) => state.stockReducer);
@@ -49,7 +117,7 @@ export default (props: any) => {
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [value, setValue] = useDebounce("", 500);
+  const [value, setValue] = useDebounce("", 300);
 
   useEffect(() => {
     dispatch(stockActions.getProductByKeyword(value));
@@ -118,6 +186,11 @@ export default (props: any) => {
       headerName: "TIME",
       field: "created",
       width: 120,
+      renderCell: ({ value }: GridRenderCellParams<string>) => (
+        <Typography variant="body1">
+          <Moment format="DD/MM/YYYY HH:mm">{value}</Moment>
+        </Typography>
+      ),
     },
     {
       headerName: "ACTION",
@@ -132,7 +205,7 @@ export default (props: any) => {
               navigate("/stock/edit/" + row.product_id);
             }}
           >
-            <EditIcon fontSize="inherit" />
+            <Edit fontSize="inherit" />
           </IconButton>
           <IconButton
             aria-label="delete"
@@ -142,7 +215,7 @@ export default (props: any) => {
               setOpenDialog(true);
             }}
           >
-            <DeleteIcon fontSize="inherit" />
+            <Delete fontSize="inherit" />
           </IconButton>
         </Stack>
       ),
@@ -205,7 +278,7 @@ export default (props: any) => {
       <Grid container style={{ marginBottom: 16 }} spacing={7}>
         <Grid item lg={3} md={6}>
           <StockCard
-            icon={AddShoppingCartIcon}
+            icon={AddShoppingCart}
             title="TOTAL"
             subtitle="112 THB"
             color="#00a65a"
@@ -214,7 +287,7 @@ export default (props: any) => {
 
         <Grid item lg={3} md={6}>
           <StockCard
-            icon={NewReleasesIcon}
+            icon={NewReleases}
             title="EMPTY"
             subtitle="9 PCS."
             color="#f39c12"
@@ -223,7 +296,7 @@ export default (props: any) => {
 
         <Grid item lg={3} md={6}>
           <StockCard
-            icon={AssignmentReturnIcon}
+            icon={AssignmentReturn}
             title="RETURN"
             subtitle="1 PCS."
             color="#dd4b39"
@@ -232,7 +305,7 @@ export default (props: any) => {
 
         <Grid item lg={3} md={6}>
           <StockCard
-            icon={StarIcon}
+            icon={Star}
             title="LOSS"
             subtitle="5 PCS."
             color="#00c0ef"
@@ -240,49 +313,21 @@ export default (props: any) => {
         </Grid>
       </Grid>
 
-      <Paper
-        component="form"
-        sx={{
-          p: "2px 4px",
-          marginTop: 10,
-          display: "flex",
-          alignItems: "center",
-          width: 400,
-          marginBottom: 2,
-        }}
-      >
-        <input type="text" hidden />
-        <InputBase
-          onChange={(e: React.ChangeEvent<any>) => {
-            setValue(e.target.value);
-            e.stopPropagation();
-            e.preventDefault();
-          }}
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Search product name"
-          inputProps={{ "aria-label": "search product name" }}
-        />
-        <SearchIcon />
-        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-
-        <IconButton
-          type="button"
-          sx={{ p: "10px" }}
-          aria-label="add"
-          component={Link}
-          to="/stock/create"
-        >
-          <AddIcon />
-        </IconButton>
-      </Paper>
-
       <DataGrid
-        sx={{ backgroundColor: "white", height: "50vh" }}
+        components={{ Toolbar: QuickSearchToolbar }}
+        sx={{ backgroundColor: "white", height: "70vh" }}
         getRowId={(row) => row.product_id}
         onRowClick={(e) => {}}
         rows={stockReducer.result}
         columns={stockColumns}
         rowsPerPageOptions={[5]}
+        componentsProps={{
+          toolbar: {
+            onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+              setValue(event?.target.value),
+            clearSearch: () => setValue(""),
+          },
+        }}
       />
       {showDialog()}
     </Box>
