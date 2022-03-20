@@ -8,6 +8,6 @@ export interface Product {
   created?: Date;
   __v?: number;
 
-  file?: Blob;
+  file?: any;
   file_obj?: URL | string;
 }

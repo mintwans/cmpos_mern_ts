@@ -1,13 +1,8 @@
 import axios from "axios";
 import join from "url-join";
-import {
-  server,
-  apiUrl,
-  NOT_CONNECT_NETWORK,
-  NETWORK_CONNECTION_MESSAGE,
-} from "../constants";
+import { server, apiUrl, NOT_CONNECT_NETWORK, NETWORK_CONNECTION_MESSAGE } from "../constants";
 import * as loginActions from "./../actions/login.action";
-import { store } from "./../index";
+import { history, store } from "./../index";
 
 const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
@@ -44,8 +39,7 @@ axios.interceptors.response.use(
       return axios.request(error.config);
     } else if (error.response.status === 403) {
       // force logout
-      localStorage.removeItem(server.TOKEN_KEY);
-      localStorage.removeItem(server.REFRESH_TOKEN_KEY);
+      dispatch(loginActions.handleLogout());
     }
 
     if (axios.isCancel(error)) {

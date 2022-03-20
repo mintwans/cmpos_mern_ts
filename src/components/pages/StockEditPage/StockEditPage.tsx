@@ -15,17 +15,12 @@ import { imageUrl } from "./../../../constants";
 
 export default () => {
   const match = useMatch("/stock/edit/:id");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isReady, setIsReady] = React.useState(false);
-  const stockEditReducer = useSelector(
-    (state: RootReducers) => state.stockEditReducer
-  );
+  const stockEditReducer = useSelector((state: RootReducers) => state.stockEditReducer);
 
   useEffect(() => {
     let id = match?.params.id;
-    dispatch(stockEditActions.getProductById(id));
-    setTimeout(() => setIsReady(true), 100);
+    dispatch(stockEditActions.getProductById(id));    
   }, []);
 
   const showForm = ({ values, setFieldValue }: FormikProps<Product>) => {
@@ -37,52 +32,23 @@ export default () => {
               Edit Product
             </Typography>
 
-            <Field
-              style={{ marginTop: 16 }}
-              fullWidth
-              component={TextField}
-              name="name"
-              type="text"
-              label="Name"
-            />
+            <Field style={{ marginTop: 16 }} fullWidth component={TextField} name="name" type="text" label="Name" />
             <br />
-            <Field
-              style={{ marginTop: 16 }}
-              fullWidth
-              component={TextField}
-              name="price"
-              type="number"
-              label="Price"
-            />
+            <Field style={{ marginTop: 16 }} fullWidth component={TextField} name="price" type="number" label="Price" />
 
-            <Field
-              style={{ marginTop: 16 }}
-              fullWidth
-              component={TextField}
-              name="stock"
-              type="number"
-              label="Stock"
-            />
+            <Field style={{ marginTop: 16 }} fullWidth component={TextField} name="stock" type="number" label="Stock" />
 
             <div style={{ margin: 16 }}>{showPreviewImage(values)}</div>
 
             <div>
-              <img
-                src={`${process.env.PUBLIC_URL}/images/ic_photo.png`}
-                style={{ width: 25, height: 20 }}
-              />
-              <span style={{ color: "#00B0CD", marginLeft: 10 }}>
-                Add Picture
-              </span>
+              <img src={`${process.env.PUBLIC_URL}/images/ic_photo.png`} style={{ width: 25, height: 20 }} />
+              <span style={{ color: "#00B0CD", marginLeft: 10 }}>Add Picture</span>
               <input
                 type="file"
                 onChange={(e: React.ChangeEvent<any>) => {
                   e.preventDefault();
                   setFieldValue("file", e.target.files[0]); // for upload
-                  setFieldValue(
-                    "file_obj",
-                    URL.createObjectURL(e.target.files[0])
-                  ); // for preview image
+                  setFieldValue("file_obj", URL.createObjectURL(e.target.files[0])); // for preview image
                 }}
                 name="image"
                 click-type="type1"
@@ -95,22 +61,10 @@ export default () => {
             </div>
           </CardContent>
           <CardActions>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              type="submit"
-              sx={{ marginRight: 1 }}
-            >
+            <Button fullWidth variant="contained" color="primary" type="submit" sx={{ marginRight: 1 }}>
               Edit
             </Button>
-            <Button
-              fullWidth
-              component={Link}
-              to="/stock"
-              color="info"
-              variant="outlined"
-            >
+            <Button fullWidth component={Link} to="/stock" color="info" variant="outlined">
               Cancl
             </Button>
           </CardActions>
@@ -123,12 +77,7 @@ export default () => {
     if (values.file_obj) {
       return <img src={values.file_obj} style={{ height: 100 }} />;
     } else if (values.image) {
-      return (
-        <img
-          src={`${imageUrl}/images/${values.image}`}
-          style={{ height: 100 }}
-        />
-      );
+      return <img src={`${imageUrl}/images/${values.image}`} style={{ height: 100 }} />;
     }
   };
 
@@ -139,9 +88,7 @@ export default () => {
       <Formik
         component={showForm}
         enableReinitialize
-        initialValues={
-          stockEditReducer.result ? stockEditReducer.result : initialValues
-        }
+        initialValues={stockEditReducer.result ? stockEditReducer.result : initialValues}
         onSubmit={(values, { setSubmitting }) => {
           let formData = new FormData();
           formData.append("product_id", String(values.product_id));

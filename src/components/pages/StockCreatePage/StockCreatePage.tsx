@@ -114,8 +114,10 @@ export default () => {
         validate={(values) => {
           let errors: any = {};
           if (!values.name) errors.name = "Enter name";
-          if (!values.stock) errors.stock = "Enter stock";
-          if (!values.price) errors.price = "Enter price";
+          if (values.stock < 10)
+            errors.stock = "Min stock is not lower than 10";
+          if (values.price < 100)
+            errors.price = "Min price is not lower than 100";
           return errors;
         }}
         initialValues={initialValues}
@@ -124,7 +126,7 @@ export default () => {
           formData.append("name", values.name);
           formData.append("price", String(values.price));
           formData.append("stock", String(values.stock));
-          formData.append("image", String(values.file));
+          formData.append("image", values.file);
           dispatch(stockActions.addProduct(formData));
           setSubmitting(false);
         }}

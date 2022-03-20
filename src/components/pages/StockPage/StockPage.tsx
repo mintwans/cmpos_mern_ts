@@ -6,18 +6,7 @@ import Edit from "@mui/icons-material/Edit";
 import NewReleases from "@mui/icons-material/NewReleases";
 import Search from "@mui/icons-material/Search";
 import Star from "@mui/icons-material/Star";
-import {
-  Avatar,
-  Box,
-  Divider,
-  Fab,
-  Grid,
-  IconButton,
-  InputBase,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Divider, Fab, Grid, IconButton, InputBase, Stack, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -25,14 +14,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Paper from "@mui/material/Paper";
-import {
-  DataGrid,
-  GridColDef,
-  GridColumns,
-  GridRenderCellParams,
-  GridRowId,
-  GridValueGetterParams,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridColumns, GridRenderCellParams, GridRowId, GridValueGetterParams } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
 import NumberFormat from "react-number-format";
@@ -67,13 +49,7 @@ function QuickSearchToolbar(props: QuickSearchToolbarProps) {
         InputProps={{
           startAdornment: <Search fontSize="small" />,
           endAdornment: (
-            <IconButton
-              title="Clear"
-              aria-label="Clear"
-              size="small"
-              style={{ visibility: props.value ? "visible" : "hidden" }}
-              onClick={props.clearSearch}
-            >
+            <IconButton title="Clear" aria-label="Clear" size="small" style={{ visibility: props.value ? "visible" : "hidden" }} onClick={props.clearSearch}>
               <Clear fontSize="small" />
             </IconButton>
           ),
@@ -138,10 +114,7 @@ export default (props: any) => {
       field: "image",
       width: 80,
       renderCell: ({ value }: GridRenderCellParams<string>) => (
-        <img
-          src={`${imageUrl}/images/${value}?dummy=${Math.random()}`}
-          style={{ width: 70, height: 70, borderRadius: "5%" }}
-        />
+        <img src={`${imageUrl}/images/${value}?dummy=${Math.random()}`} style={{ width: 70, height: 70, borderRadius: "5%" }} />
       ),
     },
     {
@@ -155,13 +128,7 @@ export default (props: any) => {
       field: "stock",
       renderCell: ({ value }: GridRenderCellParams<string>) => (
         <Typography variant="body1">
-          <NumberFormat
-            value={value}
-            displayType={"text"}
-            thousandSeparator={true}
-            decimalScale={0}
-            fixedDecimalScale={true}
-          />
+          <NumberFormat value={value} displayType={"text"} thousandSeparator={true} decimalScale={0} fixedDecimalScale={true} />
         </Typography>
       ),
     },
@@ -171,14 +138,7 @@ export default (props: any) => {
       width: 120,
       renderCell: ({ value }: GridRenderCellParams<string>) => (
         <Typography variant="body1">
-          <NumberFormat
-            value={value}
-            displayType={"text"}
-            thousandSeparator={true}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            prefix={"฿"}
-          />
+          <NumberFormat value={value} displayType={"text"} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} prefix={"฿"} />
         </Typography>
       ),
     },
@@ -224,7 +184,6 @@ export default (props: any) => {
 
   const handleDeleteConfirm = () => {
     dispatch(stockActions.deleteProduct(selectedProduct.product_id));
-    dispatch(stockActions.getProducts());
     setOpenDialog(false);
   };
 
@@ -238,27 +197,14 @@ export default (props: any) => {
     }
 
     return (
-      <Dialog
-        open={openDialog}
-        keepMounted
-        onClose={() => {}}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
+      <Dialog open={openDialog} keepMounted onClose={() => {}} aria-labelledby="alert-dialog-slide-title" aria-describedby="alert-dialog-slide-description">
         <DialogTitle id="alert-dialog-slide-title">
-          <img
-            src={`${imageUrl}/images/${
-              selectedProduct.image
-            }?dummy=${Math.random()}`}
-            style={{ width: 100, borderRadius: "5%" }}
-          />
+          <img src={`${imageUrl}/images/${selectedProduct.image}?dummy=${Math.random()}`} style={{ width: 100, borderRadius: "5%" }} />
           <br />
           Confirm to delete the product? : {" " + selectedProduct.name}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            You cannot restore deleted product.
-          </DialogContentText>
+          <DialogContentText id="alert-dialog-slide-description">You cannot restore deleted product.</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="info">
@@ -277,39 +223,19 @@ export default (props: any) => {
       {/* Summary Icons */}
       <Grid container style={{ marginBottom: 16 }} spacing={7}>
         <Grid item lg={3} md={6}>
-          <StockCard
-            icon={AddShoppingCart}
-            title="TOTAL"
-            subtitle="112 THB"
-            color="#00a65a"
-          />
+          <StockCard icon={AddShoppingCart} title="TOTAL" subtitle="112 THB" color="#00a65a" />
         </Grid>
 
         <Grid item lg={3} md={6}>
-          <StockCard
-            icon={NewReleases}
-            title="EMPTY"
-            subtitle="9 PCS."
-            color="#f39c12"
-          />
+          <StockCard icon={NewReleases} title="EMPTY" subtitle="9 PCS." color="#f39c12" />
         </Grid>
 
         <Grid item lg={3} md={6}>
-          <StockCard
-            icon={AssignmentReturn}
-            title="RETURN"
-            subtitle="1 PCS."
-            color="#dd4b39"
-          />
+          <StockCard icon={AssignmentReturn} title="RETURN" subtitle="1 PCS." color="#dd4b39" />
         </Grid>
 
         <Grid item lg={3} md={6}>
-          <StockCard
-            icon={Star}
-            title="LOSS"
-            subtitle="5 PCS."
-            color="#00c0ef"
-          />
+          <StockCard icon={Star} title="LOSS" subtitle="5 PCS." color="#00c0ef" />
         </Grid>
       </Grid>
 
@@ -323,8 +249,7 @@ export default (props: any) => {
         rowsPerPageOptions={[5]}
         componentsProps={{
           toolbar: {
-            onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-              setValue(event?.target.value),
+            onChange: (event: React.ChangeEvent<HTMLInputElement>) => setValue(event?.target.value),
             clearSearch: () => setValue(""),
           },
         }}
