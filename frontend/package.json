@@ -1,0 +1,49 @@
+{
+  "name": "mern-vite",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@hookform/resolvers": "^2.9.10",
+    "@mui/icons-material": "^5.10.16",
+    "@mui/material": "^5.10.16",
+    "@mui/x-data-grid": "^5.17.13",
+    "@react-hook/debounce": "^4.0.0",
+    "@reduxjs/toolkit": "^1.9.1",
+    "@types/faker": "5.5.3",
+    "@types/node": "^18.11.9",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.2.0",
+    "chart.js": "^4.0.1",
+    "copy-to-clipboard": "^3.3.3",
+    "dayjs": "^1.11.6",
+    "faker": "5.5.3",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.0.1",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.40.0",
+    "react-number-format": "^5.1.2",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.4.3",
+    "redux": "^4.2.0",
+    "url-join": "^5.0.0",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "@vitejs/plugin-react": "^2.2.0",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.19",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
+  }
+}

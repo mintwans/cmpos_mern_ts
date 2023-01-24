@@ -3,6 +3,7 @@
   "editor.formatOnSave": true,
   "editor.hover.delay": 1000,
   "prettier.printWidth": 180,
+  "editor.wrappingStrategy": "advanced",
   "editor.codeActionsOnSave": {
     "source.organizeImports": false
   }
