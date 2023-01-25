@@ -50,7 +50,7 @@ const Shop = (props: any) => {
 
   const getOrderDetail = (id: number) => {
     const index = shopReducer.mOrderLines.findIndex(
-      (item) => item.productId === id
+      (item) => item.product_id === id
     );
 
     return shopReducer.mOrderLines[index];
@@ -158,7 +158,7 @@ const Shop = (props: any) => {
                               variant="body1"
                               color="textPrimary"
                             >
-                              X{getOrderDetail(item.productId!).qty}
+                              X{getOrderDetail(item.product_id!).qty}
                             </Typography>
 
                             <StarsIcon sx={classes.star} />

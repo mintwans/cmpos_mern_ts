@@ -26,7 +26,7 @@ export class ProductController {
       const fileName = getFileName(files, doc.product_id.toString());
       await uploadImage(files, fileName);
       await this.productRepo.update({ _id: doc._id }, { image: fileName });
-      res.json({ result: "ok", message: { ...doc, image: fileName } });
+      return { result: "ok", message: { ...doc, image: fileName } };
     });
   }
 
@@ -47,7 +47,7 @@ export class ProductController {
         { upsert: false } // create if not exist
       );
 
-      res.json({ result: "ok" });
+      return { result: "ok" };
     });
   }
 

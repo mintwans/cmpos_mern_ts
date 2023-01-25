@@ -28,5 +28,5 @@ code --install-extension mongodb.mongodb-vscode
 
 # Test Docker and mongo
 
-- docker run --rm --name cmdev-mongo-rm -p 27019:27017 -d mongo
+- docker run --rm --name cmdev-mongo-rm -p 27018:27017 -d mongo
 - mongodb://localhost:27019

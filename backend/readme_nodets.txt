@@ -38,3 +38,13 @@ module.exports = {
 "scripts": {
       "build": "tsc && cp *.key .env ecosystem.config.js ./build",      
 }
+
+# example of ecosystem.config.js 
+module.exports = {
+  apps: [
+    {
+      name: "app1",
+      script: "./index.js",
+    },
+  ],
+};

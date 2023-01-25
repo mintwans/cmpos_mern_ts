@@ -9,7 +9,7 @@ import jwt from "./../utils/jwt";
 export class UserController {
   private userRepository = AppDataSource.getMongoRepository(Users);
 
-  async register(req: TypedBodyRequest<Users>, res: Response, next: NextFunction) {
+  async register(req: Request, res: Response, next: NextFunction) {
     try {
       req.body.created = savedValue(req.body.created, new Date());
       req.body.level = savedValue(req.body.level, "normal");
@@ -27,7 +27,7 @@ export class UserController {
     return this.userRepository.find();
   }
 
-  async login(req: TypedBodyRequest<Users>, res: Response, next: NextFunction) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { username, password } = req.body;
 
@@ -45,15 +45,15 @@ export class UserController {
           };
           let token = jwt.sign(payload);
 
-          res.json({ result: "ok", token, message: "success" });
+          return { result: "ok", token, message: "success" };
         } else {
-          res.json({ result: "nok", message: "invalid password" });
+          return { result: "nok", message: "invalid password" };
         }
       } else {
-        res.json({ result: "nok", message: "invalid username" });
+        return { result: "nok", message: "invalid username" };
       }
     } catch (error) {
-      res.json({ result: "nok", error });
+      return { result: "nok", error };
     }
   }
 

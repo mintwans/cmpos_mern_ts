@@ -1,4 +1,6 @@
-# Stage 0, "builder", based on Node.js, to build and compile
+# command to build 
+# docker build -t react_frontend . 
+# docker-compose up -d
 FROM node:lts-alpine AS builder
 WORKDIR /usr/src/app
 

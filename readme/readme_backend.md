@@ -13,7 +13,6 @@ tsc --init (to create tsconfig.json)
 
 # to run and populate collection
 
-- npm i -g yarn
 - yarn add express bcryptjs cors formidable fs-extra jsonwebtoken onesignal-node typescript
 - yarn add @types/bcryptjs @types/jsonwebtoken @types/formidable @types/fs-extra @types/cors -D
 
@@ -51,15 +50,15 @@ module.exports = {
 
 # set env variable
 
+- .env
+- .env.production
+
 ### mac
 
 - export ROOT_PATH=/Users/chaiyasittayabovorn/Desktop/vue_nov_2022/rvpPOS/backend
+- export ROOT_PATH=$(pwd)
 
 ### window
 
 - set ROOT_PATH=/Users/chaiyasittayabovorn/Desktop/vue_nov_2022/rvpPOS/backend
-
-# docker
-
-docker run --name some-mongo -p 27018:27017 -d mongo  
- mongorestore --port 27018 -d demopos /Users/chaiyasittayabovorn/Desktop/Training/VueJS/vuejs-core/vuejs_mevn_stack_dist/workshops/vuestack_2023/backend-ts/dummy_db_cmpos
+- set ROOT_PATH=%cd%

@@ -26,7 +26,7 @@ import { useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { imageUrl } from "@/constants";
+import { imageUrl } from "@/constants/index";
 import StockCard from "./../../fragments/StockCard/StockCard";
 import { useDebounce } from "@react-hook/debounce";
 import { Clear, CopyAll } from "@mui/icons-material";

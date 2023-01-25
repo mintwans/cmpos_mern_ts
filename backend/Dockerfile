@@ -1,3 +1,4 @@
+# docker build -t react_backend .
 # Base image
 FROM node:18
 
@@ -15,7 +16,7 @@ RUN npm install
 COPY . .
 
 # Creates a "dist" folder with the production build
-RUN npm run build-docker
+RUN npm run build
 
 COPY uploaded ./build/uploaded
 

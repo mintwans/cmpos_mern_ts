@@ -7,8 +7,8 @@ import { logout } from "../store/slices/authSlice";
 const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
 axios.interceptors.request.use(async (config) => {
-  if (!isAbsoluteURLRegex.test(config.url)) {
-    config.url = join(apiUrl, config.url);
+  if (!isAbsoluteURLRegex.test(config.url!)) {
+    config.url = join(apiUrl, config.url!);
   }
 
   const userToken = localStorage.getItem(server.TOKEN_KEY);

@@ -1,7 +1,7 @@
 # Set Path Environement Variable
 
-- mac export: export ROOT_PATH=/Users/....
-- win set: set ROOT_PATH=/Users/chaiyasittayabovorn/..
+- mac export: export ROOT_PATH=$(pwd)
+- win set: set ROOT_PATH=$%cd%
 
 # node npom
 

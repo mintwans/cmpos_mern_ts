@@ -9,6 +9,7 @@
 - cls
 - exit
 - db.products.find( { name: { $in: [ /^Node/i,] } })
+- db.dropDatabase();
 
 # mongo url connection
 
