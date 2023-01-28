@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   backendts:
@@ -9,5 +9,7 @@ services:
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
+      MONGO_HOST: 172.17.0.2
+      MONGO_PORT: 27017
     ports:
       - 8081:8081

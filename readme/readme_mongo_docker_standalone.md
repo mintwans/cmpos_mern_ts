@@ -22,6 +22,10 @@ docker run --name mongo-dev ^
 -p 27018:27017 -d --rm mongo
 ```
 
+# Mongo shell
+
+- docker exec -it mongo-dev sh
+
 # restore summary database
 
 - mongorestore -d demopos /script/

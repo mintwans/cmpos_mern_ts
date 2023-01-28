@@ -28,7 +28,8 @@
       "typeorm": "0.3.9"
    },
    "scripts": {
-      "start": "ts-node-dev src/index.ts",
+      "start": "ts-node src/index.ts",
+      "dev": "ts-node-dev src/index.ts",
       "build": "tsc && cp *.key ./build",
       "typeorm": "typeorm-ts-node-commonjs"
    }

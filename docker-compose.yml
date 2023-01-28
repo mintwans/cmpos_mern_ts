@@ -1,3 +1,4 @@
+# docker-compose up -d
 version: "3.5"
 
 services:
@@ -14,7 +15,7 @@ services:
     image: mongo:latest
     container_name: react_database_sh
     volumes:
-      - ./data/dummy_db_cmpos:/dummy_db_cmpos/
+      - ./dummy_db_cmpos:/dummy_db_cmpos/
     depends_on:
       - database
     networks:
@@ -27,7 +28,7 @@ services:
         /usr/bin/mongorestore --host database:27017 -d demopos /dummy_db_cmpos        
         #sleep infinity
   backend:
-    build: backend-ts/
+    build: backend/
     image: backend-react:1.0
     container_name: backend-react
     restart: always

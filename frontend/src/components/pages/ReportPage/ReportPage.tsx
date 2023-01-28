@@ -4,9 +4,10 @@ import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
 import "chart.js/auto";
 import { Chart } from "react-chartjs-2";
+import { ChartData, ChartOptions, ChartType } from "chart.js/auto";
 
 const Report = () => {
-  const [chartType, setChartType] = useState<string>("bar");
+  const [chartType, setChartType] = useState<ChartType>("line");
   const [chartData1, setChartData1] = useState([]);
   const [chartData2, setChartData2] = useState([]);
 
@@ -18,13 +19,13 @@ const Report = () => {
     return randoms;
   }
 
-  const data: any = {
+  const data: ChartData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
       {
         label: "Revenue 2022",
-        fill: false,
-        lineTension: 0.1, // line curve
+        fill: true,
+        // lineTension: 0.3, // line curve
         backgroundColor: [
           "rgba(54, 162, 235, 0.2)",
           "rgba(255, 99, 132, 0.2)",
@@ -42,7 +43,7 @@ const Report = () => {
         pointBorderColor: "rgba(75,192,192,1)",
         pointBackgroundColor: "#fff",
         pointBorderWidth: 10, // circle
-        pointHoverRadius: 5,
+        pointHoverRadius: 10,
         pointHoverBackgroundColor: "rgba(75,192,192,1)",
         pointHoverBorderColor: "rgba(220,220,220,1)",
         pointHoverBorderWidth: 2,
@@ -53,7 +54,7 @@ const Report = () => {
       {
         label: "Revenue 2023",
         fill: false,
-        lineTension: 0.1, // line curve
+        // lineTension: 0.1, // line curve
         borderWidth: 0.5, // line thiness
         backgroundColor: "rgba(0, 0, 0, 0.1)",
         borderColor: "rgba(0, 0, 0, 0.3)",
@@ -75,7 +76,12 @@ const Report = () => {
     ],
   };
 
-  const chartOption: any = {
+  const chartOption: ChartOptions = {
+    elements: {
+      line: {
+        tension: 0.3,
+      },
+    },
     plugins: {
       tooltip: {
         callbacks: {
@@ -95,7 +101,6 @@ const Report = () => {
     scales: {
       y: {
         ticks: {
-          beginAtZero: true,
           callback: function (value: any, index: any, values: any) {
             return "฿" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           },
@@ -133,9 +138,7 @@ const Report = () => {
         <RefreshIcon />
       </IconButton>
       <Box sx={{ height: "50vh" }}>
-        {chartType === "line" && <Chart type={"line"} data={data} width="100%" options={chartOption} />}
-        {chartType === "pie" && <Chart type="pie" data={data} width="100%" options={chartOption} />}
-        {chartType === "bar" && <Chart type="bar" data={data} width="100%" options={chartOption} />}
+        <Chart type={chartType} data={data} width="100%" options={chartOption} />
       </Box>
     </Paper>
   );

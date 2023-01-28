@@ -8,6 +8,16 @@ import { deleteFile, generateSeq, getFileName, uploadImage } from "../utils/cm-u
 export class ProductController {
   private productRepo = AppDataSource.getMongoRepository(Products);
 
+  async all(req: Request, res: Response, next: NextFunction) {
+    return this.productRepo.find({ order: { created: "DESC" } });
+  }
+
+  async allLike(req: Request, res: Response, next: NextFunction) {
+    return this.productRepo.findBy({
+      name: new RegExp("^.*" + req.params.name + ".*$", "i"),
+    });
+  }
+
   async add(req: Request, res: Response, next: NextFunction) {
     const form = new formidable.IncomingForm();
     form.parse(req, async (error, fields: any, files) => {
@@ -26,7 +36,7 @@ export class ProductController {
       const fileName = getFileName(files, doc.product_id.toString());
       await uploadImage(files, fileName);
       await this.productRepo.update({ _id: doc._id }, { image: fileName });
-      return { result: "ok", message: { ...doc, image: fileName } };
+      res.json({ result: "ok", message: { ...doc, image: fileName } });
     });
   }
 
@@ -47,17 +57,7 @@ export class ProductController {
         { upsert: false } // create if not exist
       );
 
-      return { result: "ok" };
-    });
-  }
-
-  async all(req: Request, res: Response, next: NextFunction) {
-    return this.productRepo.find({ order: { created: "DESC" } });
-  }
-
-  async allLike(req: Request, res: Response, next: NextFunction) {
-    return this.productRepo.findBy({
-      name: new RegExp("^.*" + req.params.name + ".*$", "i"),
+      res.json({ result: "ok" });
     });
   }
 

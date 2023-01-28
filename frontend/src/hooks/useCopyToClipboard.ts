@@ -15,14 +15,11 @@ export default function useCopyToClipboard(resetInterval: number): useCopyToClip
     };
   }, [isCopied, resetInterval]);
 
+  // benefit of useCallback: if input (text) is not changed, the cached result will be return
+  // instead of re-calculation
   const handleCopy = React.useCallback((text: number | string) => {
-    if (typeof text == "string" || typeof text == "number") {
-      copy(text.toString());
-      setCopied(true);
-    } else {
-      setCopied(false);
-      console.error(`Cannot copy typeof ${typeof text} to clipboard, must be a string or number.`);
-    }
+    copy(text.toString());
+    setCopied(true);
   }, []);
 
   return [isCopied, handleCopy];

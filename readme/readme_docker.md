@@ -13,6 +13,7 @@ docker-compose rm -f
 # check container ip-address
 
 docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mongo-dev
 
 # how to ping across containers
 

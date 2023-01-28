@@ -2,6 +2,7 @@
 
 - https://mui.com/material-ui/getting-started/installation/
 - yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material
+- Add theme and ThemeProvider (HOC) at App.tsx
 
 # custom theme
 

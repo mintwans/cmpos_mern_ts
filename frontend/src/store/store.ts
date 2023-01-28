@@ -13,7 +13,7 @@ const reducer = {
 
 export const store = configureStore({
   reducer,
-  devTools: import.meta.env.NODE_ENV === "development",
+  devTools: import.meta.env.VITE_IS_PRODUCTION === "0", // show redux log in dev mode
 });
 
 // export type of root state from reducers

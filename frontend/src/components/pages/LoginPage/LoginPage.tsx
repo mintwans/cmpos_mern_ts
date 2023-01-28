@@ -37,7 +37,7 @@ const Login = (props: LoginProps) => {
     canelBtn: { marginTop: 2 },
   };
 
-  const initialValue: User = { username: "", password: "" };
+  const initialValue: User = { username: "admin", password: "1234" };
   const {
     control,
     handleSubmit,

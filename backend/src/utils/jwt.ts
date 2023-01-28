@@ -1,10 +1,18 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { Request, Response } from "express";
+import { exit } from "process";
 
 const fs = require("fs");
 const path = require("path");
 const jwt = require("jsonwebtoken");
-// 
+
+if (!process.env.ROOT_PATH) {
+  console.log("Please set ROOT_PATH first");
+  console.log("for mac: export ROOT_PATH=$(pwd)");
+  console.log("for win: set ROOT_PATH=%cd%");
+  exit(0);
+}
+
 var publicKEY = fs.readFileSync(path.join(process.env.ROOT_PATH + "/public.key"), "utf8");
 var privateKEY = fs.readFileSync(path.join(process.env.ROOT_PATH + "/private.key"), "utf8");
 

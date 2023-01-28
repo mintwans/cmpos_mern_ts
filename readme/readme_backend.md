@@ -55,10 +55,8 @@ module.exports = {
 
 ### mac
 
-- export ROOT_PATH=/Users/chaiyasittayabovorn/Desktop/vue_nov_2022/rvpPOS/backend
 - export ROOT_PATH=$(pwd)
 
 ### window
 
-- set ROOT_PATH=/Users/chaiyasittayabovorn/Desktop/vue_nov_2022/rvpPOS/backend
 - set ROOT_PATH=%cd%
