@@ -16,7 +16,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useRoutes } from "react-router-dom";
 import menuBanner from "@/assets/images/menu_banner.png";
 import cmLogo from "@/assets/images/cm_logo.png";
 
@@ -71,13 +71,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const MyNavLink = React.forwardRef<any, any>((props, ref) => (
-  <NavLink
-    ref={ref}
-    to={props.to}
-    className={({ isActive }) =>
-      `${props.className} ${isActive ? props.activeClassName : ""}`
-    }
-  >
+  <NavLink ref={ref} to={props.to} className={({ isActive }) => `${props.className} ${isActive ? props.activeClassName : ""}`}>
     {props.children}
   </NavLink>
 ));
@@ -89,6 +83,7 @@ type MenuProps = {
 
 const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
   const theme = useTheme();
+  const location = useLocation();
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -96,11 +91,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
         <Stack direction="row" alignItems="center">
           <img alt="" src={cmLogo} style={{ height: 30 }} />
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon sx={{ color: "white" }} />
-            ) : (
-              <ChevronLeftIcon sx={{ color: "white" }} />
-            )}
+            {theme.direction === "rtl" ? <ChevronRightIcon sx={{ color: "white" }} /> : <ChevronLeftIcon sx={{ color: "white" }} />}
           </IconButton>
         </Stack>
       </DrawerHeader>
@@ -109,14 +100,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
       <Divider />
       <List>
         {/* Shop */}
-        <ListItem
-          component={MyNavLink}
-          to="/shop"
-          button
-          key="shop"
-          activeClassName="Mui-selected"
-          exact
-        >
+        <ListItem component={MyNavLink} to="/shop" key="shop" activeClassName="Mui-selected" exact>
           <ListItemIcon>
             <ShopIcon />
           </ListItemIcon>
@@ -124,14 +108,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
         </ListItem>
 
         {/* Stock */}
-        <ListItem
-          component={MyNavLink}
-          to="/stock"
-          button
-          key="stock"
-          activeClassName="Mui-selected"
-          exact
-        >
+        <ListItem component={MyNavLink} to="/stock" key="stock" className={location.pathname.indexOf("/stock") != -1 ? "Mui-selected" : ""} exact>
           <ListItemIcon>
             <LayersIcon />
           </ListItemIcon>
@@ -139,14 +116,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
         </ListItem>
 
         {/* Report */}
-        <ListItem
-          component={MyNavLink}
-          to="/report"
-          button
-          key="report"
-          activeClassName="Mui-selected"
-          exact
-        >
+        <ListItem component={MyNavLink} to="/report" button key="report" activeClassName="Mui-selected" exact>
           <ListItemIcon>
             <BarChartIcon />
           </ListItemIcon>
@@ -154,14 +124,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
         </ListItem>
 
         {/* Transaction */}
-        <ListItem
-          component={MyNavLink}
-          to="/transaction"
-          button
-          key="transaction"
-          activeClassName="Mui-selected"
-          exact
-        >
+        <ListItem component={MyNavLink} to="/transaction" button key="transaction" activeClassName="Mui-selected" exact>
           <ListItemIcon>
             <AttachMoneyIcon />
           </ListItemIcon>
@@ -172,9 +135,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerClose, open }) => {
       <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}

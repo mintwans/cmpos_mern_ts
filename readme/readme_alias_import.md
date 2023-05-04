@@ -8,6 +8,8 @@ resolve: {
   }
 ```
 
+- yarn add --dev @types/node
+
 # update tsconfig.json
 
 ```

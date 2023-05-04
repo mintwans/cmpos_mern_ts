@@ -43,7 +43,7 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     logout: (state: AuthState, action: PayloadAction<void>) => {
-      localStorage.removeItem(server.TOKEN_KEY);
+      localStorage.clear();
       state.isAuthented = false;
     },
     relogin: (state: AuthState, action: PayloadAction<void>) => {

@@ -6,5 +6,8 @@
   "editor.wrappingStrategy": "advanced",
   "editor.codeActionsOnSave": {
     "source.organizeImports": false
+  },
+  "workbench.colorCustomizations": {
+    "tab.activeBorder": "#f18d49"
   }
 }

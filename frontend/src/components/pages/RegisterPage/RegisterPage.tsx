@@ -28,7 +28,7 @@ const classes: SxProps<Theme> | any = {
 
 const formValidateSchema = Yup.object().shape({
   username: Yup.string()
-    .email("Invalid email address")
+    .email("Invalid email address")    
     .required("Email is required")
     .trim(),
   password: Yup.string().required("Password is required").trim(),

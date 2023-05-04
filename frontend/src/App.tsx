@@ -93,7 +93,7 @@ export default function App() {
     palette: {
       primary: import.meta.env.VITE_IS_PRODUCTION === "1" ? { main: "#C1272D" } : blue,
       background: {
-        default: "#EEE",
+        default: "#B8F4FF33",
       },
     },
   });
@@ -129,6 +129,13 @@ export default function App() {
                   <Container>
                     <DrawerHeader />
                     <Routes>
+                      {/** Wrap all Route under PublicRoutes element */}
+                      <Route path="/" element={<PublicRoutes isAuthented={authReducer.isAuthented} />}>
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/" element={<Navigate to="/login" />} />
+                        <Route path="*" element={<Navigate to="/login" />} />
+                      </Route>
                       {/* Protected routes */}
                       <Route path="/" element={<ProtectedRoutes isAuthented={authReducer.isAuthented} />}>
                         <Route path="/shop" element={<ShopPage />} />
@@ -139,14 +146,6 @@ export default function App() {
                         <Route path="/report" element={<ReportPage />} />
                         <Route path="/transaction" element={<TransactionPage />} />
                         {/* <Route path="/chartjs" element={<ChartJSFaker />} /> */}
-                      </Route>
-
-                      {/** Wrap all Route under PublicRoutes element */}
-                      <Route path="/" element={<PublicRoutes isAuthented={authReducer.isAuthented} />}>
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/register" element={<RegisterPage />} />
-                        <Route path="/" element={<Navigate to="/login" />} />
-                        <Route path="*" element={<Navigate to="/login" />} />
                       </Route>
                     </Routes>
                   </Container>
