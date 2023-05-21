@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
-import authReducer from "./slices/authSlice";
-import stockReducer from "./slices/stockSlice";
-import shopReducer from "./slices/shopSlice";
+import authReducer from "@/store/slices/authSlice";
+import stockReducer from "@/store/slices/stockSlice";
+import shopReducer from "@/store/slices/shopSlice";
 
 const reducer = {
   authReducer,

@@ -1,5 +1,6 @@
 # setup tailwind on vite
 
+- for vite only (cannot use create react app version)
 - https://tailwindcss.com/docs/guides/vite
 
 - copy and paste InjectTailwind.tsx in src

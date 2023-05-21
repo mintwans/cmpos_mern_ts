@@ -1,22 +1,17 @@
-import Button from "@mui/material/Button";
+import { Box, Button, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Link, useMatch, useNavigate } from "react-router-dom";
-import { editProdcut, getProductById, stockSelector } from "../../../store/slices/stockSlice";
-import { useAppDispatch } from "../../../store/store";
-import { Product } from "../../../types/product.type";
-import { imageUrl } from "./../../../constants";
+
+import { Link, useNavigate } from "react-router-dom";
+import { addProduct } from "@/store/slices/stockSlice";
+import { useAppDispatch } from "@/store/store";
+import { Product } from "@/types/product.type";
 
 import { useForm, Controller } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, TextField } from "@mui/material";
-
-const initialValue: Product = { name: "", price: 0, stock: 0 };
 
 const formValidateSchema = Yup.object().shape({
   name: Yup.string().required("Name is required").trim(),
@@ -24,49 +19,32 @@ const formValidateSchema = Yup.object().shape({
   stock: Yup.number().min(100, "Number must be greater than 100"),
 });
 
-const StockEdit = () => {
-  const match = useMatch("/stock/edit/:id");
+const StockCreate = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const stockReducer = useSelector(stockSelector);
 
-  useEffect(() => {
-    if (match?.params.id) {
-      dispatch(getProductById(match?.params.id));
+  const onSubmit = async (values: Product) => {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("price", String(values.price));
+    formData.append("stock", String(values.stock));
+    formData.append("image", values.file);
+    const result = await dispatch(addProduct(formData));
+    if (addProduct.fulfilled.match(result)) {
+      navigate("/stock");
     }
-  }, [dispatch, match?.params.id]);
+  };
 
+  const initialValue: Product = { name: "", price: 1500, stock: 9999 };
   const {
     control,
     handleSubmit,
-    getValues,
     setValue,
-    reset,
     watch,
     formState: { errors },
   } = useForm<Product>({ defaultValues: initialValue, resolver: yupResolver(formValidateSchema) });
 
-  useEffect(() => {
-    reset(stockReducer.stockOneResult ?? initialValue);
-  }, [stockReducer.stockOneResult, reset]);
-
   const watchPreviewImage = watch("file_obj");
-
-  const onSubmit = (values: Product) => {
-    let formData = new FormData();
-    formData.append("id", String(values.product_id));
-    formData.append("name", values.name);
-    formData.append("price", String(values.price));
-    formData.append("stock", String(values.stock));
-    if (values.file) {
-      formData.append("image", values.file);
-    }
-    dispatch(editProdcut(formData)).then((result) => {
-      if (editProdcut.fulfilled.match(result)) {
-        navigate("/stock");
-      }
-    });
-  };
 
   const showForm = () => {
     return (
@@ -74,7 +52,7 @@ const StockEdit = () => {
         <Card>
           <CardContent sx={{ padding: 4 }}>
             <Typography gutterBottom variant="h3">
-              Edit Product
+              Create Product
             </Typography>
 
             <Controller
@@ -105,12 +83,12 @@ const StockEdit = () => {
                   <TextField
                     {...field}
                     label="Price"
+                    type="number"
                     error={Boolean(errors.price?.message)}
                     helperText={errors.price?.message}
                     variant="outlined"
                     margin="normal"
                     required
-                    type="number"
                     fullWidth
                     autoFocus
                   />
@@ -125,13 +103,13 @@ const StockEdit = () => {
                 return (
                   <TextField
                     {...field}
+                    type="number"
                     label="Stock"
                     error={Boolean(errors.stock?.message)}
                     helperText={errors.stock?.message}
                     variant="outlined"
                     margin="normal"
                     required
-                    type="number"
                     fullWidth
                     autoFocus
                   />
@@ -139,8 +117,10 @@ const StockEdit = () => {
               }}
             ></Controller>
 
+            <Box>{showPreviewImage()}</Box>
+
             <TextField
-              sx={{ mt: 3 }}
+              sx={{ mt: 2 }}
               type="file"
               fullWidth
               onChange={(e: React.ChangeEvent<any>) => {
@@ -149,11 +129,10 @@ const StockEdit = () => {
                 setValue("file_obj", URL.createObjectURL(e.target.files[0])); // for preview image
               }}
             />
-            <Box>{getValues("image") && showPreviewImage(getValues("image")!)}</Box>
           </CardContent>
           <CardActions>
             <Button fullWidth variant="contained" color="primary" type="submit" sx={{ marginRight: 1 }}>
-              Edit
+              Create
             </Button>
             <Button fullWidth component={Link} to="/stock" color="info" variant="outlined">
               Cancl
@@ -164,15 +143,13 @@ const StockEdit = () => {
     );
   };
 
-  const showPreviewImage = (image: string) => {
+  const showPreviewImage = () => {
     if (watchPreviewImage) {
       return <img alt="" src={watchPreviewImage} style={{ height: 100 }} />;
-    } else if (image) {
-      return <img alt="" src={`${imageUrl}/images/${image}`} style={{ height: 100 }} />;
     }
   };
 
   return <Box>{showForm()}</Box>;
 };
 
-export default StockEdit;
+export default StockCreate;

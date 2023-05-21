@@ -1,7 +1,7 @@
 # vscode extensions
 
 ```
-code --install-extension octref.vetur
+code --install-extension dsznajder.es7-react-js-snippets
 code --install-extension vscode-icons-team.vscode-icons
 code --install-extension naumovs.color-highlight
 code --install-extension esbenp.prettier-vscode

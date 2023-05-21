@@ -15,19 +15,47 @@ import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
-import {
-  addOrder,
-  removeOrder,
-  shopSelector,
-  togglePayment,
-} from "../../../store/slices/shopSlice";
-import { getProducts, stockSelector } from "../../../store/slices/stockSlice";
-import { useAppDispatch } from "../../../store/store";
-import { Product } from "../../../types/product.type";
-import { imageUrl } from "./../../../constants";
-import Payment from "./../../fragments/Payment/Payment";
-import classes from "./ShopPage.styles";
+import { addOrder, removeOrder, shopSelector, togglePayment } from "../../store/slices/shopSlice";
+import { getProducts, stockSelector } from "../../store/slices/stockSlice";
+import { useAppDispatch } from "../../store/store";
+import { Product } from "../../types/product.type";
+import { imageUrl } from "../../utils/constants";
+import Payment from "../fragments/Payment/Payment";
 import waitingForSaleImage from "@/assets/images/waiting_for_sale.png";
+
+const classes = {
+  root: {
+    width: "100%",
+    marginTop: 55,
+  },
+  star: {
+    color: "red",
+  },
+  orderList: {
+    overflowX: "hidden",
+    height: 490,
+    flex: 1,
+    width: "100%",
+    maxHeight: 490,
+  },
+  orderListItem: {
+    height: 100,
+    maxHeight: 100,
+  },
+  productContainer: {
+    height: 720,
+  },
+  paymentButton: {
+    height: 95,
+    marginTop: 24,
+  },
+  leftLabel: {
+    marginLeft: 20,
+  },
+  rightLabel: {
+    marginRight: 20,
+  },
+};
 
 const Shop = (props: any) => {
   const shopReducer = useSelector(shopSelector);
@@ -42,16 +70,14 @@ const Shop = (props: any) => {
   };
 
   const isSelectedItem = (product: Product) => {
-    let index = shopReducer.mOrderLines.findIndex((item) => {
+    const index = shopReducer.mOrderLines.findIndex((item) => {
       return item._id === product._id;
     });
     return index !== -1;
   };
 
   const getOrderDetail = (id: number) => {
-    const index = shopReducer.mOrderLines.findIndex(
-      (item) => item.product_id === id
-    );
+    const index = shopReducer.mOrderLines.findIndex((item) => item.product_id === id);
 
     return shopReducer.mOrderLines[index];
   };
@@ -71,31 +97,16 @@ const Shop = (props: any) => {
           }}
         >
           {/* Image Order  */}
-          <img
-            alt="to be done"
-            src={`${imageUrl}/images/${item.image}`}
-            style={{ height: 50, width: 50 }}
-          />
+          <img alt="to be done" src={`${imageUrl}/images/${item.image}`} style={{ height: 50, width: 50 }} />
 
           {/* Name Order  */}
-          <Typography
-            color="textSecondary"
-            component="p"
-            sx={{ flexGrow: 1, marginLeft: 1, marginRight: 1 }}
-          >
+          <Typography color="textSecondary" component="p" sx={{ flexGrow: 1, marginLeft: 1, marginRight: 1 }}>
             {item.name}
           </Typography>
 
           {/* Price and Qty Order  */}
           <Typography align="right" color="textPrimary">
-            <NumericFormat
-              value={item.price}
-              displayType={"text"}
-              thousandSeparator={true}
-              decimalScale={2}
-              fixedDecimalScale={true}
-              prefix={"฿"}
-            />
+            <NumericFormat value={item.price} displayType={"text"} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} prefix={"฿"} />
             <br />X {item.qty}.
             <br />
             <DeleteOutlineIcon onClick={() => dispatch(removeOrder(item))} />
@@ -112,22 +123,10 @@ const Shop = (props: any) => {
         <Grid container spacing={1} sx={{ pt: 1 }}>
           {stockAllResult !== null &&
             stockAllResult.map((item, i) => (
-              <Grid
-                key={i}
-                item
-                xs={3}
-                onClick={() => dispatch(addOrder(item))}
-                style={{ cursor: "pointer" }}
-              >
+              <Grid key={i} item xs={3} onClick={() => dispatch(addOrder(item))} style={{ cursor: "pointer" }}>
                 <Card elevation={5}>
                   <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      alt="Contemplative Reptile"
-                      height={120}
-                      image={`${imageUrl}/images/${item.image}`}
-                      title="Contemplative Reptile"
-                    />
+                    <CardMedia component="img" alt="Contemplative Reptile" height={120} image={`${imageUrl}/images/${item.image}`} title="Contemplative Reptile" />
                     <CardContent>
                       <Typography noWrap gutterBottom>
                         {item.name}
@@ -141,23 +140,13 @@ const Shop = (props: any) => {
                         }}
                       >
                         <div style={{ flexGrow: 1 }}>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                          >
+                          <Typography variant="body2" color="textSecondary" component="p">
                             D{item.product_id} / ฿{item.price}
                           </Typography>
                         </div>
                         {isSelectedItem(item) && (
-                          <div
-                            style={{ display: "flex", flexDirection: "row" }}
-                          >
-                            <Typography
-                              style={{ marginRight: 4 }}
-                              variant="body1"
-                              color="textPrimary"
-                            >
+                          <div style={{ display: "flex", flexDirection: "row" }}>
+                            <Typography style={{ marginRight: 4 }} variant="body1" color="textPrimary">
                               X{getOrderDetail(item.product_id!).qty}
                             </Typography>
 
@@ -209,13 +198,7 @@ const Shop = (props: any) => {
           >
             <Typography variant="h6">Tax 7%</Typography>
             <Typography variant="h6" color="red">
-              <NumericFormat
-                value={shopReducer.mTaxAmt}
-                displayType={"text"}
-                decimalScale={2}
-                thousandSeparator={true}
-                prefix={"฿"}
-              />
+              <NumericFormat value={shopReducer.mTaxAmt} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"฿"} />
             </Typography>
           </Box>
 
@@ -230,28 +213,13 @@ const Shop = (props: any) => {
           >
             <Typography variant="h4">Total</Typography>
             <Typography variant="h4" color="primary">
-              <NumericFormat
-                value={shopReducer.mTotalPrice}
-                displayType={"text"}
-                thousandSeparator={true}
-                decimalScale={2}
-                fixedDecimalScale={true}
-                prefix={"฿"}
-              />
+              <NumericFormat value={shopReducer.mTotalPrice} displayType={"text"} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} prefix={"฿"} />
             </Typography>
           </Box>
 
           {shopReducer.mTotalPrice > 0 && (
-            <Button
-              fullWidth
-              sx={{ marginBottom: 2, marginTop: 2 }}
-              variant="contained"
-              color="primary"
-              onClick={() => dispatch(togglePayment())}
-            >
-              <Typography variant="h4">
-                {shopReducer.mIsPaymentMade ? "Cancel" : "Payment"}
-              </Typography>
+            <Button fullWidth sx={{ marginBottom: 2, marginTop: 2 }} variant="contained" color="primary" onClick={() => dispatch(togglePayment())}>
+              <Typography variant="h4">{shopReducer.mIsPaymentMade ? "Cancel" : "Payment"}</Typography>
             </Button>
           )}
         </Paper>
@@ -272,11 +240,7 @@ const Shop = (props: any) => {
               {renderOrderRows()}
             </List>
           ) : (
-            <img
-              alt=""
-              src={waitingForSaleImage}
-              style={{ height: 300, width: 300 }}
-            />
+            <img alt="" src={waitingForSaleImage} style={{ height: 300, width: 300 }} />
           )}
         </Paper>
       </Grid>

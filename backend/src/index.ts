@@ -4,8 +4,16 @@ import { AppDataSource } from "./data-source";
 import { Routes } from "./routes";
 import jwt from "./utils/jwt";
 import * as cors from "cors";
+import { exit } from "process";
 
-console.log("process.env.ROOT_PATH: " + process.env.ROOT_PATH);
+// Check ROOT_PATH
+console.log("echo $ROOT_PATH: " + process.env.ROOT_PATH);
+if (!process.env.ROOT_PATH) {
+  console.log("Please set ROOT_PATH first");
+  console.log("for mac: export ROOT_PATH=$(pwd)");
+  console.log("for win: set ROOT_PATH=%cd%");
+  exit(0);
+}
 
 AppDataSource.initialize()
   .then(async () => {

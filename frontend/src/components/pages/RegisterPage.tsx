@@ -5,12 +5,12 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import React from "react";
-import { User } from "../../../types/user.type";
+import { User } from "../../types/user.type";
 import { SxProps } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { Theme } from "@emotion/react";
-import { useAppDispatch } from "../../../store/store";
-import { authSelector, register } from "../../../store/slices/authSlice";
+import { useAppDispatch } from "../../store/store";
+import { authSelector, register } from "../../store/slices/authSlice";
 import { Alert, InputAdornment } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
@@ -27,15 +27,11 @@ const classes: SxProps<Theme> | any = {
 };
 
 const formValidateSchema = Yup.object().shape({
-  username: Yup.string()
-    .email("Invalid email address")    
-    .required("Email is required")
-    .trim(),
+  username: Yup.string().email("Invalid email address").required("Email is required").trim(),
   password: Yup.string().required("Password is required").trim(),
 });
 
-type RegisterProps = {};
-const Register = (props: RegisterProps) => {
+const Register = () => {
   const dispatch = useAppDispatch();
   const authReducer = useSelector(authSelector);
   const navigate = useNavigate();
@@ -110,22 +106,10 @@ const Register = (props: RegisterProps) => {
         ></Controller>
 
         {authReducer.isError && <Alert severity="error">Register failed</Alert>}
-        <Button
-          sx={classes.submitBtn}
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-        >
+        <Button sx={classes.submitBtn} type="submit" fullWidth variant="contained" color="primary">
           Create
         </Button>
-        <Button
-          sx={classes.canelBtn}
-          onClick={() => navigate(-1)}
-          type="button"
-          fullWidth
-          variant="outlined"
-        >
+        <Button sx={classes.canelBtn} onClick={() => navigate(-1)} type="button" fullWidth variant="outlined">
           Cancel
         </Button>
       </form>

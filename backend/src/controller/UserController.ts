@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { Users } from "../entity/Users";
 import { AppDataSource } from "../data-source";
 import * as bcrypt from "bcryptjs";
-import { TypedBodyRequest } from "../types/Request.types";
 import { savedValue } from "../utils/cm-util";
 import jwt from "./../utils/jwt";
 

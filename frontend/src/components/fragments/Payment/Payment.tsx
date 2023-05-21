@@ -25,7 +25,7 @@ const Payment = (props: any) => {
   };
 
   const onClickSubmit = () => {
-    let trans: TransactionRequest = {
+    const trans: TransactionRequest = {
       subtotal: 0,
       discount: 0,
       shipping_cost: 0,

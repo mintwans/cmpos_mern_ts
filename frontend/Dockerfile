@@ -11,7 +11,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 # https://hub.docker.com/_/mongo
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx

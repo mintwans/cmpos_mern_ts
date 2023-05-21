@@ -6,39 +6,26 @@ import Edit from "@mui/icons-material/Edit";
 import NewReleases from "@mui/icons-material/NewReleases";
 import Search from "@mui/icons-material/Search";
 import Star from "@mui/icons-material/Star";
-import {
-  Box,
-  Fab,
-  Grid,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Fab, Grid, IconButton, Stack, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { imageUrl } from "@/constants/index";
-import StockCard from "./../../fragments/StockCard/StockCard";
+import { imageUrl } from "@/utils/constants";
+import StockCard from "../fragments/StockCard/StockCard";
 import { useDebounce } from "@react-hook/debounce";
 import { Clear, CopyAll } from "@mui/icons-material";
-import {
-  deleteProduct,
-  getProducts,
-  stockSelector,
-} from "../../../store/slices/stockSlice";
-import { useAppDispatch } from "../../../store/store";
-import useCopyToClipboard from "../../../hooks/useCopyToClipboard";
-import { Product } from "../../../types/product.type";
-import CMDataGrid from "../../fragments/CMDataGrid";
+import { deleteProduct, getProducts, stockSelector } from "../../store/slices/stockSlice";
+import { useAppDispatch } from "../../store/store";
+import useCopyToClipboard from "../../hooks/useCopyToClipboard";
+import { Product } from "../../types/product.type";
 import dayjs from "dayjs";
 import "dayjs/locale/th";
 
@@ -64,13 +51,7 @@ function QuickSearchToolbar(props: QuickSearchToolbarProps) {
         InputProps={{
           startAdornment: <Search fontSize="small" />,
           endAdornment: (
-            <IconButton
-              title="Clear"
-              aria-label="Clear"
-              size="small"
-              style={{ visibility: props.value ? "visible" : "hidden" }}
-              onClick={props.clearSearch}
-            >
+            <IconButton title="Clear" aria-label="Clear" size="small" style={{ visibility: props.value ? "visible" : "hidden" }} onClick={props.clearSearch}>
               <Clear fontSize="small" />
             </IconButton>
           ),
@@ -135,12 +116,8 @@ const Stock = (props: any) => {
       headerName: "IMG",
       field: "image",
       width: 80,
-      renderCell: ({ value }: GridRenderCellParams<string>) => (
-        <img
-          alt=""
-          src={`${imageUrl}/images/${value}?dummy=${Math.random()}`}
-          style={{ width: 70, height: 70, borderRadius: "5%" }}
-        />
+      renderCell: ({ value }: GridRenderCellParams) => (
+        <img alt="" src={`${imageUrl}/images/${value}?dummy=${Math.random()}`} style={{ width: 70, height: 70, borderRadius: "5%" }} />
       ),
     },
     {
@@ -152,15 +129,9 @@ const Stock = (props: any) => {
       headerName: "STOCK",
       width: 120,
       field: "stock",
-      renderCell: ({ value }: GridRenderCellParams<string>) => (
+      renderCell: ({ value }: GridRenderCellParams) => (
         <Typography variant="body1">
-          <NumericFormat
-            value={value}
-            displayType={"text"}
-            thousandSeparator={true}
-            decimalScale={0}
-            fixedDecimalScale={true}
-          />
+          <NumericFormat value={value} displayType={"text"} thousandSeparator={true} decimalScale={0} fixedDecimalScale={true} />
         </Typography>
       ),
     },
@@ -168,16 +139,9 @@ const Stock = (props: any) => {
       headerName: "PRICE",
       field: "price",
       width: 120,
-      renderCell: ({ value }: GridRenderCellParams<string>) => (
+      renderCell: ({ value }: GridRenderCellParams) => (
         <Typography variant="body1">
-          <NumericFormat
-            value={value}
-            displayType={"text"}
-            thousandSeparator={true}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            prefix={"฿"}
-          />
+          <NumericFormat value={value} displayType={"text"} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} prefix={"฿"} />
         </Typography>
       ),
     },
@@ -185,7 +149,7 @@ const Stock = (props: any) => {
       headerName: "TIME",
       field: "created",
       width: 120,
-      renderCell: ({ value }: GridRenderCellParams<string>) => (
+      renderCell: ({ value }: GridRenderCellParams) => (
         <Typography variant="body1">
           {/* 543 diff thai years */}
           {dayjs(value).locale("th").add(543, "year").format("DD MMMM YYYY")}
@@ -218,9 +182,7 @@ const Stock = (props: any) => {
             <Delete fontSize="inherit" />
           </IconButton>
           <IconButton
-            disabled={
-              isCopied && selectedProduct?.product_id === row.product_id
-            }
+            disabled={isCopied && selectedProduct?.product_id === row.product_id}
             aria-label="copy"
             size="large"
             onClick={() => {
@@ -250,28 +212,14 @@ const Stock = (props: any) => {
     }
 
     return (
-      <Dialog
-        open={openDialog}
-        keepMounted
-        onClose={() => {}}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
+      <Dialog open={openDialog} keepMounted aria-labelledby="alert-dialog-slide-title" aria-describedby="alert-dialog-slide-description">
         <DialogTitle id="alert-dialog-slide-title">
-          <img
-            alt=""
-            src={`${imageUrl}/images/${
-              selectedProduct?.image
-            }?dummy=${Math.random()}`}
-            style={{ width: 100, borderRadius: "5%" }}
-          />
+          <img alt="" src={`${imageUrl}/images/${selectedProduct?.image}?dummy=${Math.random()}`} style={{ width: 100, borderRadius: "5%" }} />
           <br />
           Confirm to delete the product? : {" " + selectedProduct?.name}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            You cannot restore deleted product.
-          </DialogContentText>
+          <DialogContentText id="alert-dialog-slide-description">You cannot restore deleted product.</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="info">
@@ -290,43 +238,23 @@ const Stock = (props: any) => {
       {/* Summary Icons */}
       <Grid container sx={{ marginBottom: 3 }} spacing={7}>
         <Grid item xs={12} lg={3} md={6}>
-          <StockCard
-            icon={AddShoppingCart}
-            title="TOTAL"
-            subtitle="112 THB"
-            color="#00a65a"
-          />
+          <StockCard icon={AddShoppingCart} title="TOTAL" subtitle="112 THB" color="#00a65a" />
         </Grid>
 
         <Grid item xs={12} lg={3} md={6}>
-          <StockCard
-            icon={NewReleases}
-            title="EMPTY"
-            subtitle="9 PCS."
-            color="#f39c12"
-          />
+          <StockCard icon={NewReleases} title="EMPTY" subtitle="9 PCS." color="#f39c12" />
         </Grid>
 
         <Grid item xs={12} lg={3} md={6}>
-          <StockCard
-            icon={AssignmentReturn}
-            title="RETURN"
-            subtitle="1 PCS."
-            color="#dd4b39"
-          />
+          <StockCard icon={AssignmentReturn} title="RETURN" subtitle="1 PCS." color="#dd4b39" />
         </Grid>
 
         <Grid item xs={12} lg={3} md={6}>
-          <StockCard
-            icon={Star}
-            title="LOSS"
-            subtitle="5 PCS."
-            color="#00c0ef"
-          />
+          <StockCard icon={Star} title="LOSS" subtitle="5 PCS." color="#00c0ef" />
         </Grid>
       </Grid>
 
-      <CMDataGrid
+      <DataGrid
         components={{ Toolbar: QuickSearchToolbar }}
         sx={{
           backgroundColor: "white",
@@ -334,15 +262,14 @@ const Stock = (props: any) => {
           "& .MuiDataGrid-cell:focus": { outline: "solid #2196f3 0px" },
         }}
         getRowId={(row) => row.product_id}
-        onRowClick={(e) => {}}
+        onRowClick={(e) => {
+          console.log("click");
+        }}
         rows={stockReducer.stockAllResult}
         columns={stockColumns}
-        pageSize={10}
-        rowsPerPageOptions={[5, 10]}
         componentsProps={{
           toolbar: {
-            onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-              setValue(event?.target.value),
+            onChange: (event: React.ChangeEvent<HTMLInputElement>) => setValue(event?.target.value),
             clearSearch: () => setValue(""),
           },
         }}

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { server } from "../../constants";
-import { Product } from "../../types/product.type";
-import { TransactionResponse } from "../../types/transaction.type";
-import { httpClient } from "../../utils/HttpClient";
+import { server } from "@/utils/constants";
+import { Product } from "@/types/product.type";
+import { TransactionResponse } from "@/types/transaction.type";
+import { httpClient } from "@/utils/HttpClient";
 import { RootState } from "../store";
 
 export interface ShopState {
@@ -31,7 +31,7 @@ export const getTransactions = createAsyncThunk("shop/transaction", async (): Pr
 const updateOrder = (state: ShopState, orderLines: any) => {
   let totalPrice = 0;
   let taxAmt = 0;
-  for (let item of orderLines) {
+  for (const item of orderLines) {
     totalPrice += item.price * item.qty;
   }
   taxAmt = totalPrice * 0.07;
@@ -50,9 +50,8 @@ const shopSlice = createSlice({
   initialState: initialState,
   reducers: {
     addOrder: (state, action: PayloadAction<Product>) => {
-      let product = action.payload;
-
-      let index = state.mOrderLines.findIndex((item) => {
+      const product = action.payload;
+      const index = state.mOrderLines.findIndex((item) => {
         return item._id === product._id;
       });
 
@@ -65,8 +64,8 @@ const shopSlice = createSlice({
     },
     removeOrder: (state, action: PayloadAction<Product>) => {
       const product = action.payload;
-      let orderLines = state.mOrderLines;
-      var foundIndex = orderLines.indexOf(product);
+      const orderLines = state.mOrderLines;
+      const foundIndex = orderLines.indexOf(product);
 
       orderLines.map((item: any) => {
         if (item.product_id === product.product_id) {

@@ -22,11 +22,21 @@ docker run --name mongo-dev ^
 -p 27018:27017 -d --rm mongo
 ```
 
+# shell with mongosh
+
+- mongosh --port 27018
+
+# start/stop mongo on homebrew
+
+- https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
+- brew services start mongodb-community@6.0
+- brew services stop mongodb-community@6.0
+
 # Mongo shell
 
 - docker exec -it mongo-dev sh
 
 # restore summary database
 
-- mongorestore -d demopos /script/
-- mongo -p 27018
+- mongorestore --port 27018 -d demopos .../dummy_db_cmpos
+- mongosh --port 27018

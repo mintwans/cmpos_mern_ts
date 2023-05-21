@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { server } from "../../constants";
-import { LoginResult, RegisterResult } from "../../types/auth-result.type";
-import { User } from "../../types/user.type";
-import { httpClient } from "../../utils/HttpClient";
-import { RootState } from "../store";
+import { server } from "@/utils/constants";
+import { LoginResult, RegisterResult } from "@/types/auth-result.type";
+import { User } from "@/types/user.type";
+import { httpClient } from "@/utils/HttpClient";
+import { RootState } from "@/store/store";
 
 export interface AuthState {
   loginResult?: LoginResult;
@@ -20,7 +20,7 @@ const initialState: AuthState = {
 };
 
 export const login = createAsyncThunk("auth/login", async (value: User) => {
-  let result = await httpClient.post<LoginResult>(server.LOGIN_URL, value);
+  const result = await httpClient.post<LoginResult>(server.LOGIN_URL, value);
   if (result.data.result === "ok") {
     const { token } = result.data;
     localStorage.setItem(server.TOKEN_KEY, token);
@@ -30,7 +30,7 @@ export const login = createAsyncThunk("auth/login", async (value: User) => {
 });
 
 export const register = createAsyncThunk("auth/register", async (value: User) => {
-  let result = await httpClient.post<RegisterResult>(server.REGISTER_URL, value);
+  const result = await httpClient.post<RegisterResult>(server.REGISTER_URL, value);
   if (result.data.result === "ok") {
     return result.data;
   }
@@ -63,14 +63,9 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     // login
     builder.addCase(login.fulfilled, (state, action) => {
-      if (action.payload.result === "ok") {
-        state.isAuthented = true;
-        state.isError = false;
-        state.loginResult = action.payload;
-      } else {
-        state.isError = true;
-        state.isAuthented = false;
-      }
+      state.isAuthented = true;
+      state.isError = false;
+      state.loginResult = action.payload;
       state.isAuthenticating = false;
     });
 

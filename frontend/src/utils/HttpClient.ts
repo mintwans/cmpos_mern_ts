@@ -1,14 +1,14 @@
 import axios from "axios";
 import join from "url-join";
-import { server, apiUrl } from "../constants";
+import { server, apiUrl } from "./constants";
 import { store } from "../store/store";
 import { logout } from "../store/slices/authSlice";
 
 const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
-axios.interceptors.request.use(async (config) => {
-  if (!isAbsoluteURLRegex.test(config.url!)) {
-    config.url = join(apiUrl, config.url!);
+axios.interceptors.request.use(async (config: any) => {
+  if (!isAbsoluteURLRegex.test(config.url)) {
+    config.url = join(apiUrl, config.url);
   }
 
   const userToken = localStorage.getItem(server.TOKEN_KEY);

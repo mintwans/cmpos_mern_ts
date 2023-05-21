@@ -3,15 +3,14 @@ import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authSelector, login } from "../../../store/slices/authSlice";
-import { useAppDispatch } from "../../../store/store";
-import { User } from "../../../types/user.type";
-import CMButton from "../../fragments/CMButton";
+import { authSelector, login } from "../../store/slices/authSlice";
+import { useAppDispatch } from "../../store/store";
+import { User } from "../../types/user.type";
+import CMButton from "../fragments/CMButton";
 import { useForm, Controller } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,9 +23,7 @@ const formValidateSchema = Yup.object().shape({
   password: Yup.string().required("Password is required").trim(),
 });
 
-type LoginProps = {};
-
-const Login = (props: LoginProps) => {
+const Login = () => {
   const dispatch = useAppDispatch(); // used to call actions
   const authReducer = useSelector(authSelector); // used to access state
   const navigate = useNavigate();

@@ -12,7 +12,7 @@ const Report = () => {
   const [chartData2, setChartData2] = useState([]);
 
   function getRandomInt(): any {
-    let randoms = [];
+    const randoms = [];
     for (let index = 0; index < 8; index++) {
       randoms.push(Math.floor(Math.random() * (50000 - 5 + 1)) + 5);
     }

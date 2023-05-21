@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { server } from "../../constants";
+import { server } from "../../utils/constants";
 import { Product } from "../../types/product.type";
 import { httpClient } from "../../utils/HttpClient";
 import { RootState, store } from "../store";
@@ -44,7 +44,7 @@ export const deleteProduct = createAsyncThunk("stock/delete", async (id: string)
 });
 
 // Edit
-export const editProdcut = createAsyncThunk("stock/edit", async (formData: any) => {
+export const editProduct = createAsyncThunk("stock/edit", async (formData: any) => {
   await httpClient.put(server.PRODUCT_URL, formData);
 });
 
