@@ -23,7 +23,7 @@
       "fs-extra": "^10.1.0",
       "jsonwebtoken": "^8.5.1",
       "mongodb": "^3.0.8",
-      "onesignal-node": "^3.4.0",
+      "onesignal-node": "^3.4.0", 
       "reflect-metadata": "^0.1.13",
       "typeorm": "0.3.9"
    },

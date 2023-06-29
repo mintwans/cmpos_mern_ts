@@ -49,13 +49,11 @@ const authSlice = createSlice({
     relogin: (state: AuthState, action: PayloadAction<void>) => {
       const _token = localStorage.getItem(server.TOKEN_KEY);
       if (_token) {
-        if (!state.loginResult) {
-          state.loginResult = {
-            token: _token,
-            result: "ok",
-          };
-          state.isAuthented = true;
-        }
+        state.loginResult = {
+          token: _token,
+          result: "ok",
+        };
+        state.isAuthented = true;
       }
       state.isAuthenticating = false;
     },

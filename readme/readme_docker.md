@@ -7,8 +7,26 @@ docker network ls
 docker volume ls
 docker exec -it containerId sh
 docker inspect bridge (find using-container to update db network url)
-docker-compose up -d
-docker-compose rm -f
+docker logs <container ID>
+docker logs --follow <container ID>
+
+# Run docker node
+
+- for windows, host path must be absolute path
+- docker run --rm --name mynode -it node node
+- docker run -v ./:/app --rm --name mynode -it node node /app/test.js
+
+# docker backup volumes
+
+- Youtube : https://youtu.be/mjh82gpnYpk
+- https://www.docker.com/blog/back-up-and-share-docker-volumes-with-this-extension/
+- 1st option: using docker desktop extension - Volumes Backup & Share
+- 2nd option: with the following command line
+
+```
+docker volume ls
+docker run --rm -v cmmongo-volume:/backup-volume -v "$(pwd)":/backup busybox tar -zcvf /backup/my-backup.tar.gz /backup-volume
+```
 
 # check container ip-address
 
