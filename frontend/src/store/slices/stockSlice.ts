@@ -1,8 +1,8 @@
+import { Product } from "@/types/product.type";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { server } from "../../utils/constants";
-import { Product } from "../../types/product.type";
-import { httpClient } from "../../utils/HttpClient";
 import { RootState, store } from "../store";
+import { httpClient } from "../../utils/HttpClient";
 
 export interface StockState {
   stockAllResult: Product[];
@@ -17,11 +17,11 @@ const initialState: StockState = {
 // Add
 export const addProduct = createAsyncThunk("stock/add", async (formData: FormData) => {
   await httpClient.post(server.PRODUCT_URL, formData);
-  store.dispatch(getProducts());
+  store.dispatch(getProducts(""));
 });
 
 // Query
-export const getProducts = createAsyncThunk("stock/getAll", async (keyword?: string): Promise<Product[]> => {
+export const getProducts = createAsyncThunk("stock/getAll", async (keyword: string): Promise<Product[]> => {
   if (keyword) {
     const result = await httpClient.get<Product[]>(`${server.PRODUCT_URL}/name/${keyword}`);
     return result.data;
@@ -40,7 +40,7 @@ export const getProductById = createAsyncThunk("stock/getById", async (id: strin
 // Delete
 export const deleteProduct = createAsyncThunk("stock/delete", async (id: string) => {
   await httpClient.delete(`${server.PRODUCT_URL}/id/${id}`);
-  store.dispatch(getProducts());
+  store.dispatch(getProducts(""));
 });
 
 // Edit

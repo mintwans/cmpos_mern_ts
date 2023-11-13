@@ -1,3 +1,10 @@
+import waitingForSaleImage from "@/assets/images/waiting_for_sale.png";
+import Payment from "@/components/fragments/Payment";
+import { addOrder, removeOrder, shopSelector, togglePayment } from "@/store/slices/shopSlice";
+import { getProducts, stockSelector } from "@/store/slices/stockSlice";
+import { useAppDispatch } from "@/store/store";
+import { Product } from "@/types/product.type";
+import { imageUrl } from "@/utils/constants";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import StarsIcon from "@mui/icons-material/Stars";
 import Button from "@mui/material/Button";
@@ -12,16 +19,9 @@ import ListItem from "@mui/material/ListItem";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
-import { addOrder, removeOrder, shopSelector, togglePayment } from "../../store/slices/shopSlice";
-import { getProducts, stockSelector } from "../../store/slices/stockSlice";
-import { useAppDispatch } from "../../store/store";
-import { Product } from "../../types/product.type";
-import { imageUrl } from "../../utils/constants";
-import Payment from "../fragments/Payment/Payment";
-import waitingForSaleImage from "@/assets/images/waiting_for_sale.png";
 
 const classes = {
   root: {
@@ -57,7 +57,7 @@ const classes = {
   },
 };
 
-const Shop = (props: any) => {
+const Shop = () => {
   const shopReducer = useSelector(shopSelector);
   const stockReducer = useSelector(stockSelector);
   const dispatch = useAppDispatch();
@@ -165,7 +165,7 @@ const Shop = (props: any) => {
   };
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProducts(""));
   }, [dispatch]);
 
   return (

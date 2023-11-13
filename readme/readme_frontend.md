@@ -1,3 +1,8 @@
+# new react project
+
+- npm create vite@latest
+- yarn create vite
+
 # Master project and docs
 
 - https://drive.google.com/file/d/1fc9SN56tPAfpq53Kq97sstw6aWw3r_Q7/view?usp=share_link
@@ -33,61 +38,66 @@ code --install-extension mongodb.mongodb-vscode
 
 # install
 
-- yarn add @emotion/react @emotion/styled @mui/icons-material @mui/material @mui/x-data-grid chart.js react-chartjs-2 @react-hook/debounce react-router-dom @types/react-router-dom axios moment react-moment url-join react-number-format react-redux redux @reduxjs/toolkit react-hook-form @hookform/resolvers yup faker@5.5.3 @types/faker@5.5.3 copy-to-clipboard dayjs
+- yarn add @emotion/react @emotion/styled @mui/icons-material @mui/material @mui/x-data-grid chart.js react-chartjs-2 @react-hook/debounce react-router-dom @types/react-router-dom axios url-join react-number-format react-redux redux @reduxjs/toolkit react-hook-form @hookform/resolvers yup faker@5.5.3 @types/faker@5.5.3 copy-to-clipboard dayjs
 
 - yarn add --dev @types/node
 
+# new project
 
-
-# new project 
 npx create-react-app <name> --template typescript
 
-# react snippet 
+# react snippet
+
 tsrc : generate typescript fc
 
 # install
-yarn add @emotion/react @emotion/styled @mui/icons-material @mui/material @mui/x-data-grid chart.js react-chartjs-2 @react-hook/debounce react-router-dom @types/react-router-dom axios moment react-moment url-join react-number-format react-redux redux @reduxjs/toolkit react-hook-form @hookform/resolvers yup faker@5.5.3 @types/faker@5.5.3 copy-to-clipboard
+
+yarn add @emotion/react @emotion/styled @mui/icons-material @mui/material @mui/x-data-grid chart.js react-chartjs-2 @react-hook/debounce react-router-dom @types/react-router-dom axios url-join react-number-format react-redux redux @reduxjs/toolkit react-hook-form @hookform/resolvers yup faker@5.5.3 @types/faker@5.5.3 copy-to-clipboard
 
 # create folders
-src/components
- - fragments
- - layouts
- - pages
 
+src/components
+
+- fragments
+- layouts
+- pages
 
 # Page Components
+
 // In Pages
 npm i -g create-react-component-folder
 yarn add global create-react-component-folder
 
 // src/components/pages
-npx crcf -f  --notest --typescript LoginPage RegisterPage ReportPage StockPage StockCreatePage StockEditPage TransactionPage ShopPage
+npx crcf -f --notest --typescript LoginPage RegisterPage ReportPage StockPage StockCreatePage StockEditPage TransactionPage ShopPage
 
 // src/components/layouts
-npx crcf -f  --notest --typescript Header Menu AuthorizedPage
+npx crcf -f --notest --typescript Header Menu AuthorizedPage
 
 // src/components/fragments
-npx crcf -f  --notest --typescript StockCard Payment
+npx crcf -f --notest --typescript StockCard Payment
 
-npx crcf -f   --stylesext  --notest --typescript Test
+npx crcf -f --stylesext --notest --typescript Test
 
 tsconfig.json:
 {
-  "compilerOptions": {
-    "lib": ["es6", "dom"],
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictNullChecks": true
-  }
+"compilerOptions": {
+"lib": ["es6", "dom"],
+"noImplicitAny": true,
+"noImplicitThis": true,
+"strictNullChecks": true
+}
 }
 
 # example drawers
+
 https://mui.com/components/drawers/
 
 node server.js
 npx nodemon server.js
 npm init
 
-# backend packages
-npx yarn add express fs-extra formidable cors bcryptjs rand-token jsonwebtoken mongoose mongoose-sequence onesignal-node
-https://travistidwell.com/jsencrypt/demo/
+# private and public keys for jwt
+
+- https://travistidwell.com/jsencrypt/demo/
+- let's set encode to 2048, otherwise it will error when sign during login

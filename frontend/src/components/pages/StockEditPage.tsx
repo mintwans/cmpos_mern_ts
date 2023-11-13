@@ -44,7 +44,7 @@ const StockEdit = () => {
     reset,
     watch,
     formState: { errors },
-  } = useForm<Product>({ defaultValues: initialValue, resolver: yupResolver(formValidateSchema) });
+  } = useForm<any>({ defaultValues: initialValue, resolver: yupResolver(formValidateSchema) });
 
   useEffect(() => {
     reset(stockReducer.stockOneResult ?? initialValue);
@@ -86,7 +86,7 @@ const StockEdit = () => {
                     {...field}
                     label="Name"
                     error={Boolean(errors.name?.message)}
-                    helperText={errors.name?.message}
+                    helperText={errors.name?.message?.toString()}
                     variant="outlined"
                     margin="normal"
                     required
@@ -106,7 +106,7 @@ const StockEdit = () => {
                     {...field}
                     label="Price"
                     error={Boolean(errors.price?.message)}
-                    helperText={errors.price?.message}
+                    helperText={errors.price?.message?.toString()}
                     variant="outlined"
                     margin="normal"
                     required
@@ -127,7 +127,7 @@ const StockEdit = () => {
                     {...field}
                     label="Stock"
                     error={Boolean(errors.stock?.message)}
-                    helperText={errors.stock?.message}
+                    helperText={errors.stock?.message?.toString()}
                     variant="outlined"
                     margin="normal"
                     required
@@ -149,7 +149,7 @@ const StockEdit = () => {
                 setValue("file_obj", URL.createObjectURL(e.target.files[0])); // for preview image
               }}
             />
-            <Box>{getValues("image") && showPreviewImage(getValues("image")!)}</Box>
+            <Box>{showPreviewImage(getValues("image"))}</Box>
           </CardContent>
           <CardActions>
             <Button fullWidth variant="contained" color="primary" type="submit" sx={{ marginRight: 1 }}>

@@ -1,28 +1,29 @@
-import * as React from "react";
-import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import { Link, Navigate, Route, Routes } from "react-router-dom";
 
+import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
+import * as React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+
+import backgroundMenuImage from "@/assets/images/background_menu.jpg";
+import ErrorBoundary from "@/components/fragments/ErrorBoundary";
 import Header from "@/components/layouts/Header";
 import Menu from "@/components/layouts/Menu";
 import LoginPage from "@/components/pages/LoginPage";
 import RegisterPage from "@/components/pages/RegisterPage";
-import { Container } from "@mui/system";
-import { useSelector } from "react-redux";
-import { authSelector, relogin } from "@/store/slices/authSlice";
-import { useAppDispatch } from "@/store/store";
-import ProtectedRoutes from "@/router/protected.routes";
 import ReportPage from "@/components/pages/ReportPage";
 import ShopPage from "@/components/pages/ShopPage";
 import StockCreatePage from "@/components/pages/StockCreatePage";
 import StockEditPage from "@/components/pages/StockEditPage";
 import TransactionPage from "@/components/pages/TransactionPage";
+import ProtectedRoutes from "@/router/protected.routes";
 import PublicRoutes from "@/router/public.routes";
+import { authSelector, relogin } from "@/store/slices/authSlice";
+import { useAppDispatch } from "@/store/store";
 import { blue } from "@mui/material/colors";
-import ErrorBoundary from "@/components/fragments/ErrorBoundary";
-import backgroundMenuImage from "@/assets/images/background_menu.jpg";
+import { Container } from "@mui/system";
+import { useSelector } from "react-redux";
+import Box from "@mui/material/Box";
+
 const StockPage = React.lazy(() => import("@/components/pages/StockPage"));
 
 const drawerWidth = 240;

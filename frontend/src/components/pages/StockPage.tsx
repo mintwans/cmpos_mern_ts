@@ -1,3 +1,8 @@
+import { deleteProduct, getProducts, stockSelector } from "@/store/slices/stockSlice";
+import { useAppDispatch } from "@/store/store";
+import { Product } from "@/types/product.type";
+import { imageUrl } from "@/utils/constants";
+import { Clear, CopyAll } from "@mui/icons-material";
 import Add from "@mui/icons-material/Add";
 import AddShoppingCart from "@mui/icons-material/AddShoppingCart";
 import AssignmentReturn from "@mui/icons-material/AssignmentReturn";
@@ -14,20 +19,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { useDebounce } from "@react-hook/debounce";
+import dayjs from "dayjs";
+import "dayjs/locale/th";
 import { useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { imageUrl } from "@/utils/constants";
-import StockCard from "../fragments/StockCard/StockCard";
-import { useDebounce } from "@react-hook/debounce";
-import { Clear, CopyAll } from "@mui/icons-material";
-import { deleteProduct, getProducts, stockSelector } from "../../store/slices/stockSlice";
-import { useAppDispatch } from "../../store/store";
 import useCopyToClipboard from "../../hooks/useCopyToClipboard";
-import { Product } from "../../types/product.type";
-import dayjs from "dayjs";
-import "dayjs/locale/th";
+import StockCard from "../fragments/StockCard";
 
 interface QuickSearchToolbarProps {
   clearSearch: () => void;
@@ -88,7 +88,7 @@ function QuickSearchToolbar(props: QuickSearchToolbarProps) {
   );
 }
 
-const Stock = (props: any) => {
+const Stock = () => {
   const [isCopied, handleCopy] = useCopyToClipboard(500);
   const stockReducer = useSelector(stockSelector);
   const dispatch = useAppDispatch();
@@ -103,7 +103,7 @@ const Stock = (props: any) => {
   }, [dispatch, value]);
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProducts(""));
   }, [dispatch]);
 
   const stockColumns: GridColDef[] = [
@@ -197,9 +197,14 @@ const Stock = (props: any) => {
     },
   ];
 
-  const handleDeleteConfirm = () => {
-    dispatch(deleteProduct(selectedProduct!.product_id!.toString()));
-    setOpenDialog(false);
+  const handleDeleteConfirm = async () => {
+    if (selectedProduct && selectedProduct.product_id) {
+      const result = await dispatch(deleteProduct(selectedProduct.product_id.toString()));
+      if (deleteProduct.fulfilled.match(result)) {
+        dispatch(getProducts(""));
+      }
+      setOpenDialog(false);
+    }
   };
 
   const handleClose = () => {
@@ -262,9 +267,6 @@ const Stock = (props: any) => {
           "& .MuiDataGrid-cell:focus": { outline: "solid #2196f3 0px" },
         }}
         getRowId={(row) => row.product_id}
-        onRowClick={(e) => {
-          console.log("click");
-        }}
         rows={stockReducer.stockAllResult}
         columns={stockColumns}
         componentsProps={{

@@ -1,10 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { server } from "@/utils/constants";
+import { RootState } from "@/store/store";
 import { LoginResult, RegisterResult } from "@/types/auth-result.type";
 import { User } from "@/types/user.type";
+import { server } from "@/utils/constants";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { httpClient } from "@/utils/HttpClient";
-import { RootState } from "@/store/store";
-
 export interface AuthState {
   loginResult?: LoginResult;
   registerResult?: RegisterResult;
@@ -42,11 +41,11 @@ const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
-    logout: (state: AuthState, action: PayloadAction<void>) => {
+    logout: (state: AuthState, _action: PayloadAction<void>) => {
       localStorage.clear();
       state.isAuthented = false;
     },
-    relogin: (state: AuthState, action: PayloadAction<void>) => {
+    relogin: (state: AuthState, _action: PayloadAction<void>) => {
       const _token = localStorage.getItem(server.TOKEN_KEY);
       if (_token) {
         state.loginResult = {
@@ -68,12 +67,12 @@ const authSlice = createSlice({
     });
 
     // register
-    builder.addCase(register.fulfilled, (state, action) => {
+    builder.addCase(register.fulfilled, (state, _action) => {
       state.isError = false;
     });
 
     // register
-    builder.addCase(register.rejected, (state, action) => {
+    builder.addCase(register.rejected, (state, _action) => {
       state.isError = true;
     });
   },

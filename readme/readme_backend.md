@@ -14,7 +14,7 @@ tsc --init (to create tsconfig.json)
 # to run and populate collection
 
 - yarn add express bcryptjs cors formidable fs-extra jsonwebtoken onesignal-node typescript
-- yarn add @types/bcryptjs @types/jsonwebtoken @types/formidable @types/fs-extra @types/cors -D
+- yarn add @types/bcryptjs @types/jsonwebtoken @types/fs-extra @types/cors -D
 
 edit package.json
 yarn start

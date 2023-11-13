@@ -5,7 +5,8 @@
   "prettier.printWidth": 180,
   "editor.wrappingStrategy": "advanced",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": false
+    "source.organizeImports": false,
+    "source.fixAll": true
   },
   "workbench.colorCustomizations": {
     "tab.activeBorder": "#f18d49"

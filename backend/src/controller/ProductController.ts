@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { cloneProduct, Products } from "../entity/Products";
 import { AppDataSource } from "../data-source";
-import * as formidable from "formidable";
+import formidable, { errors as formidableErrors } from "formidable";
 
 import { deleteFile, generateSeq, getFileName, uploadImage } from "../utils/cm-util";
 
@@ -13,13 +13,13 @@ export class ProductController {
   }
 
   async allLike(req: Request, res: Response, next: NextFunction) {
-    return this.productRepo.findBy({
-      name: new RegExp("^.*" + req.params.name + ".*$", "i"),
+    return this.productRepo.find({
+      where: { name: new RegExp("^.*" + req.params.name + ".*$", "i") },
     });
   }
 
   async add(req: Request, res: Response, next: NextFunction) {
-    const form = new formidable.IncomingForm();
+    const form = formidable({});
     form.parse(req, async (error, fields: any, files) => {
       if (error) {
         res.json({ result: "nok", error });
@@ -41,7 +41,7 @@ export class ProductController {
   }
 
   async update(req: Request, res: Response, next: NextFunction) {
-    const form = new formidable.IncomingForm();
+    const form = formidable({});
     form.parse(req, async (error, fields: any, files) => {
       const fileName = getFileName(files, fields.id);
       if (fileName) {

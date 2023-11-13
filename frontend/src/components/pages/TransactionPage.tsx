@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { NumericFormat } from "react-number-format";
-import { imageUrl } from "@/utils/constants";
-import { DataGrid, GridColDef, GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
-import { Avatar, Grid, Paper, Stack, Typography } from "@mui/material";
 import { getTransactions, shopSelector } from "@/store/slices/shopSlice";
 import { useAppDispatch } from "@/store/store";
+import { imageUrl } from "@/utils/constants";
+import { Avatar, Grid, Paper, Stack, Typography } from "@mui/material";
+import { DataGrid, GridColDef, GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import "dayjs/locale/th";
+import { useEffect, useState } from "react";
+import { NumericFormat } from "react-number-format";
+import { useSelector } from "react-redux";
 
-const Transaction = (props: any) => {
+const Transaction = () => {
   const dispatch = useAppDispatch();
   const [orderList, setOrderList] = useState([]);
   const [selectedId, setSelectedId] = useState<GridRowId>(0);

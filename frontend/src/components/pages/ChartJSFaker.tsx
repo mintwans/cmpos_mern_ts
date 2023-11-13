@@ -1,7 +1,6 @@
-import React from "react";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { CategoryScale, Chart as ChartJS, Legend, LineElement, LinearScale, PointElement, Title, Tooltip } from "chart.js";
 import faker from "faker";
+import { Line } from "react-chartjs-2";
 
 // https://react-chartjs-2.js.org/examples/line-chart
 // 1. Copy line_chart_demo.tsx using faker
@@ -10,7 +9,7 @@ import faker from "faker";
 //    yarn add --dev @types/faker@5.5.3
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export const options = {
+const options = {
   responsive: true,
   plugins: {
     legend: {
@@ -25,7 +24,7 @@ export const options = {
 
 const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
-export const data = {
+const data = {
   labels,
   datasets: [
     {

@@ -1,9 +1,9 @@
-import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, ObjectId, Column } from "typeorm";
 
-@Entity('trans')
+@Entity("trans")
 export class Transactions {
   @ObjectIdColumn()
-  _id: ObjectID;
+  _id: ObjectId;
 
   @Column()
   transaction_id: number;
@@ -39,7 +39,7 @@ export class Transactions {
   payment_detail: string;
 
   @ObjectIdColumn()
-  staff_id: ObjectID;
+  staff_id: ObjectId;
 
   @Column()
   seller_id: string;

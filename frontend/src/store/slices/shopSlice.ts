@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { server } from "@/utils/constants";
 import { Product } from "@/types/product.type";
 import { TransactionResponse } from "@/types/transaction.type";
-import { httpClient } from "@/utils/HttpClient";
+import { server } from "@/utils/constants";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { httpClient } from "@/utils/HttpClient";
 
 export interface ShopState {
   transactionAllResult: TransactionResponse[];
@@ -76,7 +76,7 @@ const shopSlice = createSlice({
       orderLines.splice(foundIndex, 1);
       updateOrder(state, orderLines);
     },
-    togglePayment: (state, action: PayloadAction<void>) => {
+    togglePayment: (state, _action: PayloadAction<void>) => {
       state.mIsPaymentMade = !state.mIsPaymentMade;
       state.mGiven = 0;
     },
@@ -85,7 +85,7 @@ const shopSlice = createSlice({
     builder.addCase(getTransactions.fulfilled, (state, action) => {
       state.transactionAllResult = action.payload;
     });
-    builder.addCase(submitPayment.fulfilled, (state, action) => {
+    builder.addCase(submitPayment.fulfilled, (state, _action) => {
       state.mIsPaymentMade = false;
       state.mGiven = 0;
       state.mOrderLines = [];

@@ -10,7 +10,7 @@
 docker run --name mongo-dev \
 -v $(pwd)/mongo-dev/db:/data/db \
 -v $(pwd)/dummy_db_cmpos:/script \
--p 27018:27017 -d --rm mongo
+-p 27018:27017 -d mongo
 ```
 
 # Run mongo on docker container (win)
@@ -19,7 +19,7 @@ docker run --name mongo-dev \
 docker run --name mongo-dev ^
 -v "%cd%/mongo-dev/db":/data/db ^
 -v "%cd%/dummy_db_cmpos":/script ^
--p 27018:27017 -d --rm mongo
+-p 27018:27017 -d mongo
 ```
 
 # shell with mongosh

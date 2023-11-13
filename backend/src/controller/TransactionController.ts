@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { Transactions } from "../entity/Transactions";
 import { AppDataSource } from "../data-source";
-import { ObjectID } from "mongodb";
+import { ObjectId } from "mongodb";
 import { generateSeq } from "../utils/cm-util";
-import { TypedBodyRequest } from "../types/Request.types";
 
 export class TransactionController {
   private transRepo = AppDataSource.getMongoRepository(Transactions);
@@ -85,7 +84,7 @@ export class TransactionController {
 
   async add(req, res: Response, next: NextFunction) {
     try {
-      req.body.staff_id = ObjectID(req.userId);
+      req.body.staff_id = new ObjectId(req.userId);
       req.body.transaction_id = await generateSeq("transaction_id");
       req.body.timestamp = new Date();
       req.body.__v = 0;
@@ -97,7 +96,7 @@ export class TransactionController {
     }
   }
 
-  async one(req: TypedBodyRequest<Transactions>, res: Response, next: NextFunction) {
+  async one(req: Request, res: Response, next: NextFunction) {
     return await this.transRepo.findOne({
       where: {
         transaction_id: Number(req.params.transaction_id),

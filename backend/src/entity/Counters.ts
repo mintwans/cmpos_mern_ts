@@ -1,9 +1,9 @@
-import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, ObjectId, Column } from "typeorm";
 
 @Entity()
 export class Counters {
   @ObjectIdColumn()
-  _id: ObjectID;
+  _id: ObjectId;
 
   @Column()
   id: string;

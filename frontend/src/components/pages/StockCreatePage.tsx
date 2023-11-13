@@ -64,7 +64,7 @@ const StockCreate = () => {
                     {...field}
                     label="Name"
                     error={Boolean(errors.name?.message)}
-                    helperText={errors.name?.message}
+                    helperText={errors.name?.message?.toString()}
                     variant="outlined"
                     margin="normal"
                     required
@@ -85,7 +85,7 @@ const StockCreate = () => {
                     label="Price"
                     type="number"
                     error={Boolean(errors.price?.message)}
-                    helperText={errors.price?.message}
+                    helperText={errors.price?.message?.toString()}
                     variant="outlined"
                     margin="normal"
                     required
@@ -106,7 +106,7 @@ const StockCreate = () => {
                     type="number"
                     label="Stock"
                     error={Boolean(errors.stock?.message)}
-                    helperText={errors.stock?.message}
+                    helperText={errors.stock?.message?.toString()}
                     variant="outlined"
                     margin="normal"
                     required

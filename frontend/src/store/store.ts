@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
-import authReducer from "@/store/slices/authSlice";
 import stockReducer from "@/store/slices/stockSlice";
 import shopReducer from "@/store/slices/shopSlice";
+import authReducer from "@/store/slices/authSlice";
 
 const reducer = {
-  authReducer,
   stockReducer,
   shopReducer,
+  authReducer,
 };
 
 export const store = configureStore({

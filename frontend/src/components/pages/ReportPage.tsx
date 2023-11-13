@@ -1,10 +1,10 @@
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { Box, Button, ButtonGroup, IconButton, Paper } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React, { useEffect, useState } from "react";
 import "chart.js/auto";
-import { Chart } from "react-chartjs-2";
 import { ChartData, ChartOptions, ChartType } from "chart.js/auto";
+import { useEffect, useState } from "react";
+import { Chart } from "react-chartjs-2";
 
 const Report = () => {
   const [chartType, setChartType] = useState<ChartType>("line");
@@ -25,9 +25,9 @@ const Report = () => {
       {
         label: "Revenue 2022",
         fill: true,
-        // lineTension: 0.3, // line curve
+        // tension: 0.3, // line curve
         backgroundColor: [
-          "rgba(54, 162, 235, 0.2)",
+          "rgba(54, 162, 235, 0.1)",
           "rgba(255, 99, 132, 0.2)",
           "rgba(255, 206, 86, 0.2)",
           "rgba(75, 192, 192, 0.2)",
@@ -54,7 +54,7 @@ const Report = () => {
       {
         label: "Revenue 2023",
         fill: false,
-        // lineTension: 0.1, // line curve
+        // tension: 0.1, // line curve
         borderWidth: 0.5, // line thiness
         backgroundColor: "rgba(0, 0, 0, 0.1)",
         borderColor: "rgba(0, 0, 0, 0.3)",
@@ -101,7 +101,7 @@ const Report = () => {
     scales: {
       y: {
         ticks: {
-          callback: function (value: any, index: any, values: any) {
+          callback: function (value: any, _index: any, _values: any) {
             return "฿" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           },
         },

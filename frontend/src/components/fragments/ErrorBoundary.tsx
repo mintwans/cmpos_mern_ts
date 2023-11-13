@@ -9,20 +9,17 @@ interface ErrorBoundaryProps {
   children: React.ReactNode;
 }
 
-class ErrorBoundary extends React.Component<
-  ErrorBoundaryProps,
-  ErrorBoundaryState
-> {
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: any) {
     super(props);
     this.state = { hasError: false, errorMessage: "" };
   }
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(_error: Error) {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  componentDidCatch(error: Error, _errorInfo: React.ErrorInfo) {
     this.setState({ errorMessage: error.message });
   }
 

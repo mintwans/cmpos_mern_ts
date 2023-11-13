@@ -1,3 +1,10 @@
+import loginBg from "@/assets/images/bg4.jpg";
+import CMButton from "@/components/fragments/CMButton";
+import { authSelector, login } from "@/store/slices/authSlice";
+import { useAppDispatch } from "@/store/store";
+import { User } from "@/types/user.type";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Icons from "@mui/icons-material/";
 import { Box, InputAdornment } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
@@ -5,17 +12,10 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authSelector, login } from "../../store/slices/authSlice";
-import { useAppDispatch } from "../../store/store";
-import { User } from "../../types/user.type";
-import CMButton from "../fragments/CMButton";
-import { useForm, Controller } from "react-hook-form";
 import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Icons from "@mui/icons-material/";
-import loginBg from "@/assets/images/bg4.jpg";
 
 const formValidateSchema = Yup.object().shape({
   // username: Yup.string().email("Invalid email address").required("Email is required").trim(),

@@ -13,7 +13,7 @@ WORKDIR /usr/src/app
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
-COPY *.key ./
+
 
 # Install app dependencies
 RUN npm install
@@ -26,8 +26,8 @@ RUN npm run build
 
 COPY uploaded ./build/uploaded
 
-ENV ROOT_PATH=./build
-
+ENV ROOT_PATH=/usr/src/app/build 
+COPY *.key ./build
 
 # Start the server using the production build
 CMD [ "node", "build/index.js" ]

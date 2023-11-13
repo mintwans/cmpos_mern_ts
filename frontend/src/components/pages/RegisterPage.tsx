@@ -1,23 +1,21 @@
+import loginBg from "@/assets/images/bg4.jpg";
+import { authSelector, register } from "@/store/slices/authSlice";
+import { useAppDispatch } from "@/store/store";
+import { User } from "@/types/user.type";
+import { Theme } from "@emotion/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Icons from "@mui/icons-material/";
+import { Alert, InputAdornment } from "@mui/material";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Box } from "@mui/system";
-import React from "react";
-import { User } from "../../types/user.type";
-import { SxProps } from "@mui/system";
-import { useNavigate } from "react-router-dom";
-import { Theme } from "@emotion/react";
-import { useAppDispatch } from "../../store/store";
-import { authSelector, register } from "../../store/slices/authSlice";
-import { Alert, InputAdornment } from "@mui/material";
+import { Box, SxProps } from "@mui/system";
+import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Icons from "@mui/icons-material/";
-import loginBg from "@/assets/images/bg4.jpg";
 
 // add any to fix error temporary
 const classes: SxProps<Theme> | any = {
@@ -26,8 +24,27 @@ const classes: SxProps<Theme> | any = {
   canelBtn: { marginTop: 2 },
 };
 
+const fullNameValidation = (fullName) => {
+  const regexp = /^[a-z]{3,} [a-z]{3,}$/i;
+  const valid = regexp.test(fullName);
+  return valid
+    ? {
+        isValid: true,
+      }
+    : {
+        isValid: false,
+        errorMessage: "The Full Name should include a First and Last Name with at least 3 chars minimum each.",
+      };
+};
+
 const formValidateSchema = Yup.object().shape({
-  username: Yup.string().email("Invalid email address").required("Email is required").trim(),
+  // username: Yup.string().required("Email is required").trim(),
+  username: Yup.string().test("username", () => {
+    (_value: string) => {
+      debugger;
+      return _value != "admin" ? true : "Errror 555";
+    };
+  }),
   password: Yup.string().required("Password is required").trim(),
 });
 
@@ -63,7 +80,7 @@ const Register = () => {
             <TextField
               {...field}
               error={Boolean(errors.username?.message)}
-              helperText={errors.username?.message}
+              helperText={errors.username?.message?.toString()}
               variant="outlined"
               margin="normal"
               fullWidth
@@ -88,7 +105,7 @@ const Register = () => {
             <TextField
               {...field}
               helperText={errors.password?.message}
-              error={Boolean(errors.password?.message)}
+              error={Boolean(errors.password?.message?.toString())}
               variant="outlined"
               margin="normal"
               fullWidth

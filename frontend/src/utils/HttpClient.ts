@@ -1,8 +1,8 @@
 import axios from "axios";
 import join from "url-join";
 import { server, apiUrl } from "./constants";
-import { store } from "../store/store";
-import { logout } from "../store/slices/authSlice";
+import { store } from "@/store/store";
+import { logout } from "@/store/slices/authSlice";
 
 const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
